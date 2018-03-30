@@ -1,0 +1,394 @@
+EESchema Schematic File Version 2
+LIBS:kemet
+LIBS:usevolt
+LIBS:wurth_elektronik_LED
+LIBS:power
+LIBS:yageo
+LIBS:hcu-cache
+EELAYER 26 0
+EELAYER END
+$Descr A3 16535 11693
+encoding utf-8
+Sheet 1 15
+Title "HCU"
+Date "2018-02-21"
+Rev "1"
+Comp "Usewood Forest Tec Oy"
+Comment1 "Usevolt Oy"
+Comment2 "Olli Usenius"
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Sheet
+S 3200 2000 1100 950 
+U 57E619A9
+F0 "Power supply" 60
+F1 "pwr_supply_sheet.sch" 60
+F2 "VIN" I L 3200 2100 60 
+F3 "+5V" O R 4300 2250 60 
+F4 "+3V3" O R 4300 2400 60 
+F5 "VDD" O R 4300 2100 60 
+F6 "GND" I L 3200 2800 60 
+$EndSheet
+$Sheet
+S 5500 3550 2650 3450
+U 57E682A9
+F0 "lpc1549" 60
+F1 "lpc1549.sch" 60
+F2 "CANL" I L 5500 4000 60 
+F3 "CANH" I L 5500 3900 60 
+$EndSheet
+$Comp
+L +3V3 #PWR02
+U 1 1 57E93CBF
+P 4900 2050
+F 0 "#PWR02" H 4900 1900 50  0001 C CNN
+F 1 "+3V3" H 4915 2223 50  0000 C CNN
+F 2 "" H 4900 2050 50  0000 C CNN
+F 3 "" H 4900 2050 50  0000 C CNN
+	1    4900 2050
+	1    0    0    -1  
+$EndComp
+$Comp
+L VDD #PWR03
+U 1 1 57E93E22
+P 4400 2050
+F 0 "#PWR03" H 4400 1900 50  0001 C CNN
+F 1 "VDD" H 4417 2223 50  0000 C CNN
+F 2 "" H 4400 2050 50  0000 C CNN
+F 3 "" H 4400 2050 50  0000 C CNN
+	1    4400 2050
+	1    0    0    -1  
+$EndComp
+$Comp
+L +5V #PWR04
+U 1 1 589766AF
+P 4650 2050
+F 0 "#PWR04" H 4650 1900 50  0001 C CNN
+F 1 "+5V" H 4665 2223 50  0000 C CNN
+F 2 "" H 4650 2050 50  0000 C CNN
+F 3 "" H 4650 2050 50  0000 C CNN
+	1    4650 2050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4900 2050 4900 2400
+Wire Wire Line
+	4900 2400 4300 2400
+Wire Wire Line
+	4400 2050 4400 2100
+Wire Wire Line
+	4400 2100 4300 2100
+Wire Wire Line
+	4650 2050 4650 2250
+Wire Wire Line
+	4650 2250 4300 2250
+$Comp
+L AMPSEAL_8_POS_VERT_BLACK_SEALED_1-776276-1 J?
+U 1 1 5A79A3F3
+P 1350 2100
+F 0 "J?" H 1379 2082 45  0000 L CNN
+F 1 "AMPSEAL_8_POS_VERT_BLACK_SEALED_1-776276-1" H 1450 2100 45  0001 L BNN
+F 2 "usevolt:AMPSEAL_8_POS_776275-1" H 1380 2250 20  0001 C CNN
+F 3 "http://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocNm=776276&DocType=Customer+Drawing&DocLang=English" H 1450 2070 60  0001 C CNN
+F 4 "A106572-ND" H 2050 2670 60  0001 C CNN "2nd Source Part Number"
+F 5 "Digikey" H 1950 2570 60  0001 C CNN "2nd Source"
+F 6 "571-1-776276-1" H 1850 2470 60  0001 C CNN "1st Source Part Number"
+F 7 "1-776276-1" H 1650 2270 60  0001 C CNN "Manufacturer Part Number"
+F 8 "Mouser" H 1750 2370 60  0001 C CNN "1st Source"
+F 9 "TE Connectivity" H 1550 2170 60  0001 C CNN "Manufacturer"
+	1    1350 2100
+	-1   0    0    -1  
+$EndComp
+$Comp
+L AMPSEAL_8_POS_VERT_BLACK_SEALED_1-776276-1 J?
+U 2 1 5A79A545
+P 1350 2250
+F 0 "J?" H 1379 2232 45  0000 L CNN
+F 1 "AMPSEAL_8_POS_VERT_BLACK_SEALED_1-776276-1" H 1450 2250 45  0001 L BNN
+F 2 "usevolt:AMPSEAL_8_POS_776275-1" H 1380 2400 20  0001 C CNN
+F 3 "http://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocNm=776276&DocType=Customer+Drawing&DocLang=English" H 1450 2220 60  0001 C CNN
+F 4 "A106572-ND" H 2050 2820 60  0001 C CNN "2nd Source Part Number"
+F 5 "Digikey" H 1950 2720 60  0001 C CNN "2nd Source"
+F 6 "571-1-776276-1" H 1850 2620 60  0001 C CNN "1st Source Part Number"
+F 7 "1-776276-1" H 1650 2420 60  0001 C CNN "Manufacturer Part Number"
+F 8 "Mouser" H 1750 2520 60  0001 C CNN "1st Source"
+F 9 "TE Connectivity" H 1550 2320 60  0001 C CNN "Manufacturer"
+	2    1350 2250
+	-1   0    0    -1  
+$EndComp
+$Comp
+L AMPSEAL_8_POS_VERT_BLACK_SEALED_1-776276-1 J?
+U 3 1 5A79A8B7
+P 1350 2400
+F 0 "J?" H 1379 2382 45  0000 L CNN
+F 1 "AMPSEAL_8_POS_VERT_BLACK_SEALED_1-776276-1" H 1450 2400 45  0001 L BNN
+F 2 "usevolt:AMPSEAL_8_POS_776275-1" H 1380 2550 20  0001 C CNN
+F 3 "http://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocNm=776276&DocType=Customer+Drawing&DocLang=English" H 1450 2370 60  0001 C CNN
+F 4 "A106572-ND" H 2050 2970 60  0001 C CNN "2nd Source Part Number"
+F 5 "Digikey" H 1950 2870 60  0001 C CNN "2nd Source"
+F 6 "571-1-776276-1" H 1850 2770 60  0001 C CNN "1st Source Part Number"
+F 7 "1-776276-1" H 1650 2570 60  0001 C CNN "Manufacturer Part Number"
+F 8 "Mouser" H 1750 2670 60  0001 C CNN "1st Source"
+F 9 "TE Connectivity" H 1550 2470 60  0001 C CNN "Manufacturer"
+	3    1350 2400
+	-1   0    0    -1  
+$EndComp
+$Comp
+L AMPSEAL_8_POS_VERT_BLACK_SEALED_1-776276-1 J?
+U 4 1 5A79A9C7
+P 1350 2550
+F 0 "J?" H 1379 2532 45  0000 L CNN
+F 1 "AMPSEAL_8_POS_VERT_BLACK_SEALED_1-776276-1" H 1450 2550 45  0001 L BNN
+F 2 "usevolt:AMPSEAL_8_POS_776275-1" H 1380 2700 20  0001 C CNN
+F 3 "http://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocNm=776276&DocType=Customer+Drawing&DocLang=English" H 1450 2520 60  0001 C CNN
+F 4 "A106572-ND" H 2050 3120 60  0001 C CNN "2nd Source Part Number"
+F 5 "Digikey" H 1950 3020 60  0001 C CNN "2nd Source"
+F 6 "571-1-776276-1" H 1850 2920 60  0001 C CNN "1st Source Part Number"
+F 7 "1-776276-1" H 1650 2720 60  0001 C CNN "Manufacturer Part Number"
+F 8 "Mouser" H 1750 2820 60  0001 C CNN "1st Source"
+F 9 "TE Connectivity" H 1550 2620 60  0001 C CNN "Manufacturer"
+	4    1350 2550
+	-1   0    0    -1  
+$EndComp
+$Comp
+L AMPSEAL_8_POS_VERT_BLACK_SEALED_1-776276-1 J?
+U 5 1 5A79AADD
+P 1350 2700
+F 0 "J?" H 1379 2682 45  0000 L CNN
+F 1 "AMPSEAL_8_POS_VERT_BLACK_SEALED_1-776276-1" H 1450 2700 45  0001 L BNN
+F 2 "usevolt:AMPSEAL_8_POS_776275-1" H 1380 2850 20  0001 C CNN
+F 3 "http://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocNm=776276&DocType=Customer+Drawing&DocLang=English" H 1450 2670 60  0001 C CNN
+F 4 "A106572-ND" H 2050 3270 60  0001 C CNN "2nd Source Part Number"
+F 5 "Digikey" H 1950 3170 60  0001 C CNN "2nd Source"
+F 6 "571-1-776276-1" H 1850 3070 60  0001 C CNN "1st Source Part Number"
+F 7 "1-776276-1" H 1650 2870 60  0001 C CNN "Manufacturer Part Number"
+F 8 "Mouser" H 1750 2970 60  0001 C CNN "1st Source"
+F 9 "TE Connectivity" H 1550 2770 60  0001 C CNN "Manufacturer"
+	5    1350 2700
+	-1   0    0    -1  
+$EndComp
+$Comp
+L AMPSEAL_8_POS_VERT_BLACK_SEALED_1-776276-1 J?
+U 6 1 5A79AD45
+P 1350 2850
+F 0 "J?" H 1379 2832 45  0000 L CNN
+F 1 "AMPSEAL_8_POS_VERT_BLACK_SEALED_1-776276-1" H 1450 2850 45  0001 L BNN
+F 2 "usevolt:AMPSEAL_8_POS_776275-1" H 1380 3000 20  0001 C CNN
+F 3 "http://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocNm=776276&DocType=Customer+Drawing&DocLang=English" H 1450 2820 60  0001 C CNN
+F 4 "A106572-ND" H 2050 3420 60  0001 C CNN "2nd Source Part Number"
+F 5 "Digikey" H 1950 3320 60  0001 C CNN "2nd Source"
+F 6 "571-1-776276-1" H 1850 3220 60  0001 C CNN "1st Source Part Number"
+F 7 "1-776276-1" H 1650 3020 60  0001 C CNN "Manufacturer Part Number"
+F 8 "Mouser" H 1750 3120 60  0001 C CNN "1st Source"
+F 9 "TE Connectivity" H 1550 2920 60  0001 C CNN "Manufacturer"
+	6    1350 2850
+	-1   0    0    -1  
+$EndComp
+$Comp
+L AMPSEAL_8_POS_VERT_BLACK_SEALED_1-776276-1 J?
+U 7 1 5A79AE65
+P 1350 3000
+F 0 "J?" H 1379 2982 45  0000 L CNN
+F 1 "AMPSEAL_8_POS_VERT_BLACK_SEALED_1-776276-1" H 1450 3000 45  0001 L BNN
+F 2 "usevolt:AMPSEAL_8_POS_776275-1" H 1380 3150 20  0001 C CNN
+F 3 "http://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocNm=776276&DocType=Customer+Drawing&DocLang=English" H 1450 2970 60  0001 C CNN
+F 4 "A106572-ND" H 2050 3570 60  0001 C CNN "2nd Source Part Number"
+F 5 "Digikey" H 1950 3470 60  0001 C CNN "2nd Source"
+F 6 "571-1-776276-1" H 1850 3370 60  0001 C CNN "1st Source Part Number"
+F 7 "1-776276-1" H 1650 3170 60  0001 C CNN "Manufacturer Part Number"
+F 8 "Mouser" H 1750 3270 60  0001 C CNN "1st Source"
+F 9 "TE Connectivity" H 1550 3070 60  0001 C CNN "Manufacturer"
+	7    1350 3000
+	-1   0    0    -1  
+$EndComp
+$Comp
+L AMPSEAL_8_POS_VERT_BLACK_SEALED_1-776276-1 J?
+U 8 1 5A79AF81
+P 1350 3150
+F 0 "J?" H 1379 3132 45  0000 L CNN
+F 1 "AMPSEAL_8_POS_VERT_BLACK_SEALED_1-776276-1" H 1450 3150 45  0001 L BNN
+F 2 "usevolt:AMPSEAL_8_POS_776275-1" H 1380 3300 20  0001 C CNN
+F 3 "http://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocNm=776276&DocType=Customer+Drawing&DocLang=English" H 1450 3120 60  0001 C CNN
+F 4 "A106572-ND" H 2050 3720 60  0001 C CNN "2nd Source Part Number"
+F 5 "Digikey" H 1950 3620 60  0001 C CNN "2nd Source"
+F 6 "571-1-776276-1" H 1850 3520 60  0001 C CNN "1st Source Part Number"
+F 7 "1-776276-1" H 1650 3320 60  0001 C CNN "Manufacturer Part Number"
+F 8 "Mouser" H 1750 3420 60  0001 C CNN "1st Source"
+F 9 "TE Connectivity" H 1550 3220 60  0001 C CNN "Manufacturer"
+	8    1350 3150
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	1450 2100 1650 2100
+Wire Wire Line
+	1650 2100 3200 2100
+Wire Wire Line
+	1450 2400 1650 2400
+Wire Wire Line
+	1650 2100 1650 2400
+Wire Wire Line
+	1650 2400 1650 2850
+Connection ~ 1650 2100
+Wire Wire Line
+	1650 2850 1450 2850
+Connection ~ 1650 2400
+Wire Wire Line
+	1450 2250 2850 2250
+Wire Wire Line
+	2850 2250 2850 2800
+Wire Wire Line
+	2850 2800 3200 2800
+Wire Wire Line
+	5500 3900 5150 3900
+Wire Wire Line
+	5150 3900 5150 3250
+Wire Wire Line
+	5150 3250 2500 3250
+Wire Wire Line
+	2500 3250 2500 2550
+Wire Wire Line
+	2500 2550 1450 2550
+Wire Wire Line
+	1450 2700 2400 2700
+Wire Wire Line
+	2400 2700 2400 3350
+Wire Wire Line
+	2400 3350 5050 3350
+Wire Wire Line
+	5050 3350 5050 4000
+Wire Wire Line
+	5050 4000 5500 4000
+$Sheet
+S 11450 800  1050 400 
+U 5A8D7860
+F0 "Sheet5A8D785F" 60
+F1 "vnd5050.sch" 60
+F2 "OUT1" O R 12500 900 60 
+F3 "OUT2" O R 12500 1100 60 
+F4 "IN1" I L 11450 900 60 
+F5 "IN2" I L 11450 1000 60 
+F6 "SENSE" O L 11450 1100 60 
+$EndSheet
+$Sheet
+S 11450 1400 1050 400 
+U 5A8D8BD2
+F0 "Sheet5A8D8BD1" 60
+F1 "vnd5050.sch" 60
+F2 "OUT1" O R 12500 1500 60 
+F3 "OUT2" O R 12500 1700 60 
+F4 "IN1" I L 11450 1500 60 
+F5 "IN2" I L 11450 1600 60 
+F6 "SENSE" O L 11450 1700 60 
+$EndSheet
+$Sheet
+S 11450 2000 1050 400 
+U 5A8D900F
+F0 "Sheet5A8D900E" 60
+F1 "vnd5050.sch" 60
+F2 "OUT1" O R 12500 2100 60 
+F3 "OUT2" O R 12500 2300 60 
+F4 "IN1" I L 11450 2100 60 
+F5 "IN2" I L 11450 2200 60 
+F6 "SENSE" O L 11450 2300 60 
+$EndSheet
+$Sheet
+S 11450 2600 1050 400 
+U 5A8D95F3
+F0 "Sheet5A8D95F2" 60
+F1 "vnd5050.sch" 60
+F2 "OUT1" O R 12500 2700 60 
+F3 "OUT2" O R 12500 2900 60 
+F4 "IN1" I L 11450 2700 60 
+F5 "IN2" I L 11450 2800 60 
+F6 "SENSE" O L 11450 2900 60 
+$EndSheet
+$Sheet
+S 11450 3200 1050 400 
+U 5A8D9C64
+F0 "Sheet5A8D9C63" 60
+F1 "vnd5050.sch" 60
+F2 "OUT1" O R 12500 3300 60 
+F3 "OUT2" O R 12500 3500 60 
+F4 "IN1" I L 11450 3300 60 
+F5 "IN2" I L 11450 3400 60 
+F6 "SENSE" O L 11450 3500 60 
+$EndSheet
+$Sheet
+S 11450 3800 1050 400 
+U 5A8DA46E
+F0 "Sheet5A8DA46D" 60
+F1 "vnd5050.sch" 60
+F2 "OUT1" O R 12500 3900 60 
+F3 "OUT2" O R 12500 4100 60 
+F4 "IN1" I L 11450 3900 60 
+F5 "IN2" I L 11450 4000 60 
+F6 "SENSE" O L 11450 4100 60 
+$EndSheet
+$Sheet
+S 11450 4400 1050 400 
+U 5A8DB2AD
+F0 "Sheet5A8DB2AC" 60
+F1 "vnd5050.sch" 60
+F2 "OUT1" O R 12500 4500 60 
+F3 "OUT2" O R 12500 4700 60 
+F4 "IN1" I L 11450 4500 60 
+F5 "IN2" I L 11450 4600 60 
+F6 "SENSE" O L 11450 4700 60 
+$EndSheet
+$Sheet
+S 11450 5000 1050 400 
+U 5A8DBBEF
+F0 "Sheet5A8DBBEE" 60
+F1 "vnd5050.sch" 60
+F2 "OUT1" O R 12500 5100 60 
+F3 "OUT2" O R 12500 5300 60 
+F4 "IN1" I L 11450 5100 60 
+F5 "IN2" I L 11450 5200 60 
+F6 "SENSE" O L 11450 5300 60 
+$EndSheet
+$Sheet
+S 11450 5600 1050 400 
+U 5A8DEA06
+F0 "Sheet5A8DEA05" 60
+F1 "vnd5050.sch" 60
+F2 "OUT1" O R 12500 5700 60 
+F3 "OUT2" O R 12500 5900 60 
+F4 "IN1" I L 11450 5700 60 
+F5 "IN2" I L 11450 5800 60 
+F6 "SENSE" O L 11450 5900 60 
+$EndSheet
+$Sheet
+S 11450 6200 1050 400 
+U 5A8DF701
+F0 "Sheet5A8DF700" 60
+F1 "vnd5050.sch" 60
+F2 "OUT1" O R 12500 6300 60 
+F3 "OUT2" O R 12500 6500 60 
+F4 "IN1" I L 11450 6300 60 
+F5 "IN2" I L 11450 6400 60 
+F6 "SENSE" O L 11450 6500 60 
+$EndSheet
+$Sheet
+S 11450 6800 1050 400 
+U 5A8E02BA
+F0 "Sheet5A8E02B9" 60
+F1 "vnd5050.sch" 60
+F2 "OUT1" O R 12500 6900 60 
+F3 "OUT2" O R 12500 7100 60 
+F4 "IN1" I L 11450 6900 60 
+F5 "IN2" I L 11450 7000 60 
+F6 "SENSE" O L 11450 7100 60 
+$EndSheet
+$Sheet
+S 11450 7400 1050 400 
+U 5A8E1025
+F0 "Sheet5A8E1024" 60
+F1 "vnd5050.sch" 60
+F2 "OUT1" O R 12500 7500 60 
+F3 "OUT2" O R 12500 7700 60 
+F4 "IN1" I L 11450 7500 60 
+F5 "IN2" I L 11450 7600 60 
+F6 "SENSE" O L 11450 7700 60 
+$EndSheet
+$EndSCHEMATC

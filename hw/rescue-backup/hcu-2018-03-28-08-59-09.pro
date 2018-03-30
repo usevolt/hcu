@@ -1,4 +1,4 @@
-update=ke 28. maaliskuuta 2018 08.59.10
+update=ti  6. helmikuuta 2018 13.27.23
 version=1
 last_client=kicad
 [pcbnew]
@@ -37,5 +37,11 @@ LabSize=60
 ERC_TestSimilarLabels=1
 [eeschema]
 version=1
-LibDir=
+LibDir=/home/usevolt/uv/kicad/libs
+[eeschema/libraries]
+LibName1=/home/usevolt/uv/kicad/libs/kemet
+LibName2=/home/usevolt/uv/kicad/libs/usevolt
+LibName3=/home/usevolt/uv/kicad/libs/wurth_elektronik_LED
+LibName4=/home/usevolt/uv/kicad/libs/power
+LibName5=yageo
 

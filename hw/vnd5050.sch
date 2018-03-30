@@ -1,16 +1,10 @@
-EESchema Schematic File Version 2
-LIBS:esb-rescue
-LIBS:kemet
-LIBS:usevolt
-LIBS:wurth_elektronik_LED
-LIBS:power
-LIBS:yageo
-LIBS:esb-cache
+EESchema Schematic File Version 4
+LIBS:hcu-cache
 EELAYER 26 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 7 13
+Sheet 5 15
 Title ""
 Date ""
 Rev ""
@@ -29,17 +23,22 @@ IN1
 Text HLabel 2550 4000 0    60   Input ~ 0
 IN2
 Text HLabel 2550 3350 0    60   Output ~ 0
-SENSE1
-Text HLabel 2550 4200 0    60   Output ~ 0
-SENSE2
+SENSE
 $Comp
-L VND5050AJTR-E U401
+L usevolt:VND5050AJTR-E U301
 U 1 1 59D8088A
 P 4600 4000
-AR Path="/5A015FC0/59D8088A" Ref="U401"  Part="1" 
-AR Path="/5A02A41F/59D8088A" Ref="U901"  Part="1" 
-AR Path="/5A12B58E/59D8088A" Ref="U401"  Part="1" 
-F 0 "U401" H 4700 4447 60  0000 C CNN
+AR Path="/5A8D7860/59D8088A" Ref="U301"  Part="1" 
+AR Path="/5A8D8BD2/59D8088A" Ref="U401"  Part="1" 
+AR Path="/5A8D900F/59D8088A" Ref="U501"  Part="1" 
+AR Path="/5A8D95F3/59D8088A" Ref="U601"  Part="1" 
+AR Path="/5A8D9C64/59D8088A" Ref="U701"  Part="1" 
+AR Path="/5A8DA46E/59D8088A" Ref="U801"  Part="1" 
+AR Path="/5A8DB2AD/59D8088A" Ref="U901"  Part="1" 
+AR Path="/5A8DBBEF/59D8088A" Ref="U1001"  Part="1" 
+AR Path="/5A8DEA06/59D8088A" Ref="U1101"  Part="1" 
+AR Path="/5A8DF701/59D8088A" Ref="U1201"  Part="1" 
+F 0 "U1201" H 4700 4447 60  0000 C CNN
 F 1 "VND5050AJTR-E" H 4700 4341 60  0000 C CNN
 F 2 "usevolt:PowerSSO-12" H 4600 4400 60  0001 C CNN
 F 3 "http://www.st.com/content/ccc/resource/technical/document/datasheet/group2/a5/e5/14/55/09/93/43/94/CD00103333/files/CD00103333.pdf/jcr:content/translations/en.CD00103333.pdf" H 4600 4400 60  0001 C CNN
@@ -51,13 +50,20 @@ F 7 "VND5050AJTR-E" H 4800 4600 60  0001 C CNN "Manufacturer Part Number"
 	1    0    0    -1  
 $EndComp
 $Comp
-L VDD #PWR402
+L power:VDD #PWR0303
 U 1 1 59D808C7
 P 5250 3650
-AR Path="/5A015FC0/59D808C7" Ref="#PWR402"  Part="1" 
-AR Path="/5A02A41F/59D808C7" Ref="#PWR902"  Part="1" 
-AR Path="/5A12B58E/59D808C7" Ref="#PWR033"  Part="1" 
-F 0 "#PWR033" H 5250 3500 50  0001 C CNN
+AR Path="/5A8D7860/59D808C7" Ref="#PWR0303"  Part="1" 
+AR Path="/5A8D8BD2/59D808C7" Ref="#PWR0403"  Part="1" 
+AR Path="/5A8D900F/59D808C7" Ref="#PWR0503"  Part="1" 
+AR Path="/5A8D95F3/59D808C7" Ref="#PWR0603"  Part="1" 
+AR Path="/5A8D9C64/59D808C7" Ref="#PWR0703"  Part="1" 
+AR Path="/5A8DA46E/59D808C7" Ref="#PWR0803"  Part="1" 
+AR Path="/5A8DB2AD/59D808C7" Ref="#PWR0903"  Part="1" 
+AR Path="/5A8DBBEF/59D808C7" Ref="#PWR01003"  Part="1" 
+AR Path="/5A8DEA06/59D808C7" Ref="#PWR01103"  Part="1" 
+AR Path="/5A8DF701/59D808C7" Ref="#PWR01203"  Part="1" 
+F 0 "#PWR01203" H 5250 3500 50  0001 C CNN
 F 1 "VDD" H 5267 3823 50  0000 C CNN
 F 2 "" H 5250 3650 50  0000 C CNN
 F 3 "" H 5250 3650 50  0000 C CNN
@@ -65,13 +71,20 @@ F 3 "" H 5250 3650 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR401
+L power:GND #PWR0301
 U 1 1 59D86DC2
 P 2950 4450
-AR Path="/5A015FC0/59D86DC2" Ref="#PWR401"  Part="1" 
-AR Path="/5A02A41F/59D86DC2" Ref="#PWR901"  Part="1" 
-AR Path="/5A12B58E/59D86DC2" Ref="#PWR034"  Part="1" 
-F 0 "#PWR034" H 2950 4200 50  0001 C CNN
+AR Path="/5A8D7860/59D86DC2" Ref="#PWR0301"  Part="1" 
+AR Path="/5A8D8BD2/59D86DC2" Ref="#PWR0401"  Part="1" 
+AR Path="/5A8D900F/59D86DC2" Ref="#PWR0501"  Part="1" 
+AR Path="/5A8D95F3/59D86DC2" Ref="#PWR0601"  Part="1" 
+AR Path="/5A8D9C64/59D86DC2" Ref="#PWR0701"  Part="1" 
+AR Path="/5A8DA46E/59D86DC2" Ref="#PWR0801"  Part="1" 
+AR Path="/5A8DB2AD/59D86DC2" Ref="#PWR0901"  Part="1" 
+AR Path="/5A8DBBEF/59D86DC2" Ref="#PWR01001"  Part="1" 
+AR Path="/5A8DEA06/59D86DC2" Ref="#PWR01101"  Part="1" 
+AR Path="/5A8DF701/59D86DC2" Ref="#PWR01201"  Part="1" 
+F 0 "#PWR01201" H 2950 4200 50  0001 C CNN
 F 1 "GND" H 2955 4277 50  0000 C CNN
 F 2 "" H 2950 4450 50  0000 C CNN
 F 3 "" H 2950 4450 50  0000 C CNN
@@ -79,31 +92,30 @@ F 3 "" H 2950 4450 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L 390 R402
-U 1 1 59D88771
-P 3150 4100
-AR Path="/5A015FC0/59D88771" Ref="R402"  Part="1" 
-AR Path="/5A02A41F/59D88771" Ref="R902"  Part="1" 
-AR Path="/5A12B58E/59D88771" Ref="R402"  Part="1" 
-F 0 "R402" H 3200 4284 45  0000 C CNN
-F 1 "390" H 3200 4200 45  0000 C CNN
-F 2 "yageo:0603" H 3180 4250 20  0001 C CNN
-F 3 "" H 3119 4139 60  0001 C CNN
-F 4 "" H 3519 4539 60  0001 C CNN "1st Source Part Number"
-F 5 "Digikey" H 3419 4439 60  0001 C CNN "1st Source"
-F 6 "RC0603FR-07390RL" H 3319 4339 60  0001 C CNN "Manufacturer Part Number"
-F 7 "YAGEO" H 3219 4239 60  0001 C CNN "Manufacturer"
-	1    3150 4100
-	1    0    0    -1  
-$EndComp
-$Comp
-L 390 R401
+L yageo:390 R?
 U 1 1 59D88845
 P 3150 3550
-AR Path="/5A015FC0/59D88845" Ref="R401"  Part="1" 
-AR Path="/5A02A41F/59D88845" Ref="R901"  Part="1" 
-AR Path="/5A12B58E/59D88845" Ref="R401"  Part="1" 
-F 0 "R401" H 3200 3734 45  0000 C CNN
+AR Path="/5A015FC0/59D88845" Ref="R?"  Part="1" 
+AR Path="/5A02A41F/59D88845" Ref="R?"  Part="1" 
+AR Path="/5A12B58E/59D88845" Ref="R?"  Part="1" 
+AR Path="/5A7B157A/59D88845" Ref="R?"  Part="1" 
+AR Path="/5A7B341B/59D88845" Ref="R?"  Part="1" 
+AR Path="/5A7B2C1B/59D88845" Ref="R?"  Part="1" 
+AR Path="/5A7B3FAD/59D88845" Ref="R?"  Part="1" 
+AR Path="/5A7B4C13/59D88845" Ref="R?"  Part="1" 
+AR Path="/5A7B577E/59D88845" Ref="R?"  Part="1" 
+AR Path="/5A7B753D/59D88845" Ref="R?"  Part="1" 
+AR Path="/5A8D7860/59D88845" Ref="R303"  Part="1" 
+AR Path="/5A8D8BD2/59D88845" Ref="R403"  Part="1" 
+AR Path="/5A8D900F/59D88845" Ref="R503"  Part="1" 
+AR Path="/5A8D95F3/59D88845" Ref="R603"  Part="1" 
+AR Path="/5A8D9C64/59D88845" Ref="R703"  Part="1" 
+AR Path="/5A8DA46E/59D88845" Ref="R803"  Part="1" 
+AR Path="/5A8DB2AD/59D88845" Ref="R903"  Part="1" 
+AR Path="/5A8DBBEF/59D88845" Ref="R1003"  Part="1" 
+AR Path="/5A8DEA06/59D88845" Ref="R1103"  Part="1" 
+AR Path="/5A8DF701/59D88845" Ref="R1203"  Part="1" 
+F 0 "R1203" H 3200 3734 45  0000 C CNN
 F 1 "390" H 3200 3650 45  0000 C CNN
 F 2 "yageo:0603" H 3180 3700 20  0001 C CNN
 F 3 "" H 3119 3589 60  0001 C CNN
@@ -115,13 +127,30 @@ F 7 "YAGEO" H 3219 3689 60  0001 C CNN "Manufacturer"
 	1    0    0    -1  
 $EndComp
 $Comp
-L 1K R403
+L yageo:1K R?
 U 1 1 5A05950C
 P 2750 3550
-AR Path="/5A015FC0/5A05950C" Ref="R403"  Part="1" 
-AR Path="/5A02A41F/5A05950C" Ref="R903"  Part="1" 
-AR Path="/5A12B58E/5A05950C" Ref="R403"  Part="1" 
-F 0 "R403" H 2800 3734 45  0000 C CNN
+AR Path="/5A015FC0/5A05950C" Ref="R?"  Part="1" 
+AR Path="/5A02A41F/5A05950C" Ref="R?"  Part="1" 
+AR Path="/5A12B58E/5A05950C" Ref="R?"  Part="1" 
+AR Path="/5A7B157A/5A05950C" Ref="R?"  Part="1" 
+AR Path="/5A7B341B/5A05950C" Ref="R?"  Part="1" 
+AR Path="/5A7B2C1B/5A05950C" Ref="R?"  Part="1" 
+AR Path="/5A7B3FAD/5A05950C" Ref="R?"  Part="1" 
+AR Path="/5A7B4C13/5A05950C" Ref="R?"  Part="1" 
+AR Path="/5A7B577E/5A05950C" Ref="R?"  Part="1" 
+AR Path="/5A7B753D/5A05950C" Ref="R?"  Part="1" 
+AR Path="/5A8D7860/5A05950C" Ref="R301"  Part="1" 
+AR Path="/5A8D8BD2/5A05950C" Ref="R401"  Part="1" 
+AR Path="/5A8D900F/5A05950C" Ref="R501"  Part="1" 
+AR Path="/5A8D95F3/5A05950C" Ref="R601"  Part="1" 
+AR Path="/5A8D9C64/5A05950C" Ref="R701"  Part="1" 
+AR Path="/5A8DA46E/5A05950C" Ref="R801"  Part="1" 
+AR Path="/5A8DB2AD/5A05950C" Ref="R901"  Part="1" 
+AR Path="/5A8DBBEF/5A05950C" Ref="R1001"  Part="1" 
+AR Path="/5A8DEA06/5A05950C" Ref="R1101"  Part="1" 
+AR Path="/5A8DF701/5A05950C" Ref="R1201"  Part="1" 
+F 0 "R1201" H 2800 3734 45  0000 C CNN
 F 1 "1K" H 2800 3650 45  0000 C CNN
 F 2 "yageo:0603" H 2780 3700 20  0001 C CNN
 F 3 "" H 2719 3589 60  0001 C CNN
@@ -133,13 +162,30 @@ F 7 "YAGEO" H 2819 3689 60  0001 C CNN "Manufacturer"
 	1    0    0    -1  
 $EndComp
 $Comp
-L 1K R404
+L yageo:1K R?
 U 1 1 5A059568
 P 2750 4100
-AR Path="/5A015FC0/5A059568" Ref="R404"  Part="1" 
-AR Path="/5A02A41F/5A059568" Ref="R904"  Part="1" 
-AR Path="/5A12B58E/5A059568" Ref="R404"  Part="1" 
-F 0 "R404" H 2800 4284 45  0000 C CNN
+AR Path="/5A015FC0/5A059568" Ref="R?"  Part="1" 
+AR Path="/5A02A41F/5A059568" Ref="R?"  Part="1" 
+AR Path="/5A12B58E/5A059568" Ref="R?"  Part="1" 
+AR Path="/5A7B157A/5A059568" Ref="R?"  Part="1" 
+AR Path="/5A7B341B/5A059568" Ref="R?"  Part="1" 
+AR Path="/5A7B2C1B/5A059568" Ref="R?"  Part="1" 
+AR Path="/5A7B3FAD/5A059568" Ref="R?"  Part="1" 
+AR Path="/5A7B4C13/5A059568" Ref="R?"  Part="1" 
+AR Path="/5A7B577E/5A059568" Ref="R?"  Part="1" 
+AR Path="/5A7B753D/5A059568" Ref="R?"  Part="1" 
+AR Path="/5A8D7860/5A059568" Ref="R302"  Part="1" 
+AR Path="/5A8D8BD2/5A059568" Ref="R402"  Part="1" 
+AR Path="/5A8D900F/5A059568" Ref="R502"  Part="1" 
+AR Path="/5A8D95F3/5A059568" Ref="R602"  Part="1" 
+AR Path="/5A8D9C64/5A059568" Ref="R702"  Part="1" 
+AR Path="/5A8DA46E/5A059568" Ref="R802"  Part="1" 
+AR Path="/5A8DB2AD/5A059568" Ref="R902"  Part="1" 
+AR Path="/5A8DBBEF/5A059568" Ref="R1002"  Part="1" 
+AR Path="/5A8DEA06/5A059568" Ref="R1102"  Part="1" 
+AR Path="/5A8DF701/5A059568" Ref="R1202"  Part="1" 
+F 0 "R1202" H 2800 4284 45  0000 C CNN
 F 1 "1K" H 2800 4200 45  0000 C CNN
 F 2 "yageo:0603" H 2780 4250 20  0001 C CNN
 F 3 "" H 2719 4139 60  0001 C CNN
@@ -151,10 +197,27 @@ F 7 "YAGEO" H 2819 4239 60  0001 C CNN "Manufacturer"
 	1    0    0    -1  
 $EndComp
 $Comp
-L DIODE_RS07J-GS18 D701
+L usevolt:DIODE_RS07J-GS18 D?
 U 1 1 5A2AAF9E
 P 5450 4750
-F 0 "D701" V 5400 4652 45  0000 R CNN
+AR Path="/5A7B157A/5A2AAF9E" Ref="D?"  Part="1" 
+AR Path="/5A7B341B/5A2AAF9E" Ref="D?"  Part="1" 
+AR Path="/5A7B2C1B/5A2AAF9E" Ref="D?"  Part="1" 
+AR Path="/5A7B3FAD/5A2AAF9E" Ref="D?"  Part="1" 
+AR Path="/5A7B4C13/5A2AAF9E" Ref="D?"  Part="1" 
+AR Path="/5A7B577E/5A2AAF9E" Ref="D?"  Part="1" 
+AR Path="/5A7B753D/5A2AAF9E" Ref="D?"  Part="1" 
+AR Path="/5A8D7860/5A2AAF9E" Ref="D302"  Part="1" 
+AR Path="/5A8D8BD2/5A2AAF9E" Ref="D402"  Part="1" 
+AR Path="/5A8D900F/5A2AAF9E" Ref="D502"  Part="1" 
+AR Path="/5A8D95F3/5A2AAF9E" Ref="D602"  Part="1" 
+AR Path="/5A8D9C64/5A2AAF9E" Ref="D702"  Part="1" 
+AR Path="/5A8DA46E/5A2AAF9E" Ref="D802"  Part="1" 
+AR Path="/5A8DB2AD/5A2AAF9E" Ref="D902"  Part="1" 
+AR Path="/5A8DBBEF/5A2AAF9E" Ref="D1002"  Part="1" 
+AR Path="/5A8DEA06/5A2AAF9E" Ref="D1102"  Part="1" 
+AR Path="/5A8DF701/5A2AAF9E" Ref="D1202"  Part="1" 
+F 0 "D1202" V 5400 4652 45  0000 R CNN
 F 1 "DIODE_RS07J-GS18" H 5470 4690 45  0001 L BNN
 F 2 "usevolt:DO219AB" H 5480 4900 20  0001 C CNN
 F 3 "http://www.vishay.com/docs/85742/rs07b.pdf" H 5470 4770 60  0001 C CNN
@@ -168,10 +231,27 @@ F 9 "Vishay Semiconductor Diodes Division" H 5570 4870 60  0001 C CNN "Manufactu
 	0    -1   -1   0   
 $EndComp
 $Comp
-L DIODE_RS07J-GS18 D702
+L usevolt:DIODE_RS07J-GS18 D?
 U 1 1 5A2AB087
 P 5700 4750
-F 0 "D702" V 5650 4652 45  0000 R CNN
+AR Path="/5A7B157A/5A2AB087" Ref="D?"  Part="1" 
+AR Path="/5A7B341B/5A2AB087" Ref="D?"  Part="1" 
+AR Path="/5A7B2C1B/5A2AB087" Ref="D?"  Part="1" 
+AR Path="/5A7B3FAD/5A2AB087" Ref="D?"  Part="1" 
+AR Path="/5A7B4C13/5A2AB087" Ref="D?"  Part="1" 
+AR Path="/5A7B577E/5A2AB087" Ref="D?"  Part="1" 
+AR Path="/5A7B753D/5A2AB087" Ref="D?"  Part="1" 
+AR Path="/5A8D7860/5A2AB087" Ref="D303"  Part="1" 
+AR Path="/5A8D8BD2/5A2AB087" Ref="D403"  Part="1" 
+AR Path="/5A8D900F/5A2AB087" Ref="D503"  Part="1" 
+AR Path="/5A8D95F3/5A2AB087" Ref="D603"  Part="1" 
+AR Path="/5A8D9C64/5A2AB087" Ref="D703"  Part="1" 
+AR Path="/5A8DA46E/5A2AB087" Ref="D803"  Part="1" 
+AR Path="/5A8DB2AD/5A2AB087" Ref="D903"  Part="1" 
+AR Path="/5A8DBBEF/5A2AB087" Ref="D1003"  Part="1" 
+AR Path="/5A8DEA06/5A2AB087" Ref="D1103"  Part="1" 
+AR Path="/5A8DF701/5A2AB087" Ref="D1203"  Part="1" 
+F 0 "D1203" V 5650 4652 45  0000 R CNN
 F 1 "DIODE_RS07J-GS18" H 5720 4690 45  0001 L BNN
 F 2 "usevolt:DO219AB" H 5730 4900 20  0001 C CNN
 F 3 "http://www.vishay.com/docs/85742/rs07b.pdf" H 5720 4770 60  0001 C CNN
@@ -185,10 +265,20 @@ F 9 "Vishay Semiconductor Diodes Division" H 5820 4870 60  0001 C CNN "Manufactu
 	0    -1   -1   0   
 $EndComp
 $Comp
-L GND #PWR035
+L power:GND #PWR0304
 U 1 1 5A2AB10F
 P 5550 5150
-F 0 "#PWR035" H 5550 4900 50  0001 C CNN
+AR Path="/5A8D7860/5A2AB10F" Ref="#PWR0304"  Part="1" 
+AR Path="/5A8D8BD2/5A2AB10F" Ref="#PWR0404"  Part="1" 
+AR Path="/5A8D900F/5A2AB10F" Ref="#PWR0504"  Part="1" 
+AR Path="/5A8D95F3/5A2AB10F" Ref="#PWR0604"  Part="1" 
+AR Path="/5A8D9C64/5A2AB10F" Ref="#PWR0704"  Part="1" 
+AR Path="/5A8DA46E/5A2AB10F" Ref="#PWR0804"  Part="1" 
+AR Path="/5A8DB2AD/5A2AB10F" Ref="#PWR0904"  Part="1" 
+AR Path="/5A8DBBEF/5A2AB10F" Ref="#PWR01004"  Part="1" 
+AR Path="/5A8DEA06/5A2AB10F" Ref="#PWR01104"  Part="1" 
+AR Path="/5A8DF701/5A2AB10F" Ref="#PWR01204"  Part="1" 
+F 0 "#PWR01204" H 5550 4900 50  0001 C CNN
 F 1 "GND" H 5555 4977 50  0000 C CNN
 F 2 "" H 5550 5150 50  0000 C CNN
 F 3 "" H 5550 5150 50  0000 C CNN
@@ -196,7 +286,7 @@ F 3 "" H 5550 5150 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	5250 3650 5250 4000
+	5250 3650 5250 3800
 Wire Wire Line
 	5250 3800 5100 3800
 Wire Wire Line
@@ -206,44 +296,35 @@ Wire Wire Line
 	5250 4000 5100 4000
 Connection ~ 5250 3900
 Wire Wire Line
-	5100 4100 5800 4100
+	5100 4100 5250 4100
 Wire Wire Line
 	5100 4200 5250 4200
 Wire Wire Line
 	5250 4200 5250 4100
 Connection ~ 5250 4100
 Wire Wire Line
-	5100 4400 5800 4400
+	5100 4400 5250 4400
 Wire Wire Line
 	5100 4300 5250 4300
 Wire Wire Line
 	5250 4300 5250 4400
 Connection ~ 5250 4400
 Wire Wire Line
-	2550 3450 4300 3450
+	2550 3450 2650 3450
 Wire Wire Line
-	2550 4000 4300 4000
+	2550 4000 2650 4000
 Wire Wire Line
-	2950 3550 2950 4450
+	2950 3550 2950 4100
 Wire Wire Line
 	2950 4300 4300 4300
 Wire Wire Line
 	3050 3550 2950 3550
 Connection ~ 2950 4300
-Wire Wire Line
-	3050 4100 2950 4100
 Connection ~ 2950 4100
 Wire Wire Line
-	3350 4100 4300 4100
+	3350 3550 3500 3550
 Wire Wire Line
-	3350 3550 4150 3550
-Wire Wire Line
-	2550 4200 3500 4200
-Wire Wire Line
-	3500 4200 3500 4100
-Connection ~ 3500 4100
-Wire Wire Line
-	3500 3550 3500 3350
+	3500 3200 3500 3350
 Wire Wire Line
 	3500 3350 2550 3350
 Connection ~ 3500 3550
@@ -263,7 +344,7 @@ Connection ~ 5450 4100
 Wire Wire Line
 	5700 5050 5700 4950
 Wire Wire Line
-	5450 5050 5700 5050
+	5450 5050 5550 5050
 Wire Wire Line
 	5450 5050 5450 4950
 Wire Wire Line
@@ -272,35 +353,31 @@ Connection ~ 5550 5050
 Wire Wire Line
 	4300 3900 4150 3900
 Wire Wire Line
-	4150 3900 4150 3550
+	4150 3550 4150 3900
 Wire Wire Line
 	4300 3450 4300 3800
 $Comp
-L 4.7uF C702
+L kemet:4.7uF C?
 U 1 1 5A708309
-P 3150 3700
-F 0 "C702" H 3200 3899 45  0000 C CNN
-F 1 "4.7uF" H 3200 3815 45  0000 C CNN
-F 2 "kemet:0603" H 3180 3850 20  0001 C CNN
-F 3 "http://www.farnell.com/datasheets/2062994.pdf?_ga=1.180651367.1948984246.1460023966" H 3054 3709 60  0001 C CNN
-F 4 "1572625" H 3454 4109 60  0001 C CNN "1st Source Part Number"
-F 5 "C0603C475K8PACTU" H 3254 3909 60  0001 C CNN "Manufacturer Part Number"
-F 6 "Farnell" H 3354 4009 60  0001 C CNN "1st Source"
-F 7 "KEMET" H 3154 3809 60  0001 C CNN "Manufacturer"
-	1    3150 3700
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	3050 3700 3050 3550
-Connection ~ 3050 3550
-Wire Wire Line
-	3350 3700 3350 3550
-Connection ~ 3350 3550
-$Comp
-L 4.7uF C703
-U 1 1 5A7083E2
 P 3150 3850
-F 0 "C703" H 3200 4049 45  0000 C CNN
+AR Path="/5A7B157A/5A708309" Ref="C?"  Part="1" 
+AR Path="/5A7B341B/5A708309" Ref="C?"  Part="1" 
+AR Path="/5A7B2C1B/5A708309" Ref="C?"  Part="1" 
+AR Path="/5A7B3FAD/5A708309" Ref="C?"  Part="1" 
+AR Path="/5A7B4C13/5A708309" Ref="C?"  Part="1" 
+AR Path="/5A7B577E/5A708309" Ref="C?"  Part="1" 
+AR Path="/5A7B753D/5A708309" Ref="C?"  Part="1" 
+AR Path="/5A8D7860/5A708309" Ref="C301"  Part="1" 
+AR Path="/5A8D8BD2/5A708309" Ref="C401"  Part="1" 
+AR Path="/5A8D900F/5A708309" Ref="C501"  Part="1" 
+AR Path="/5A8D95F3/5A708309" Ref="C601"  Part="1" 
+AR Path="/5A8D9C64/5A708309" Ref="C701"  Part="1" 
+AR Path="/5A8DA46E/5A708309" Ref="C801"  Part="1" 
+AR Path="/5A8DB2AD/5A708309" Ref="C901"  Part="1" 
+AR Path="/5A8DBBEF/5A708309" Ref="C1001"  Part="1" 
+AR Path="/5A8DEA06/5A708309" Ref="C1101"  Part="1" 
+AR Path="/5A8DF701/5A708309" Ref="C1201"  Part="1" 
+F 0 "C1201" H 3200 4049 45  0000 C CNN
 F 1 "4.7uF" H 3200 3965 45  0000 C CNN
 F 2 "kemet:0603" H 3180 4000 20  0001 C CNN
 F 3 "http://www.farnell.com/datasheets/2062994.pdf?_ga=1.180651367.1948984246.1460023966" H 3054 3859 60  0001 C CNN
@@ -312,9 +389,100 @@ F 7 "KEMET" H 3154 3959 60  0001 C CNN "Manufacturer"
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	3050 3850 3050 4100
-Connection ~ 3050 4100
+	3050 3850 3050 3550
+Connection ~ 3050 3550
 Wire Wire Line
-	3350 3850 3350 4100
-Connection ~ 3350 4100
+	3350 3850 3350 3550
+Connection ~ 3350 3550
+Wire Wire Line
+	4150 4100 4300 4100
+Connection ~ 4150 3900
+$Comp
+L usevolt:DIODE_RS07J-GS18 D?
+U 1 1 5A7BC689
+P 3700 3200
+AR Path="/5A7B157A/5A7BC689" Ref="D?"  Part="1" 
+AR Path="/5A7B341B/5A7BC689" Ref="D?"  Part="1" 
+AR Path="/5A7B2C1B/5A7BC689" Ref="D?"  Part="1" 
+AR Path="/5A7B3FAD/5A7BC689" Ref="D?"  Part="1" 
+AR Path="/5A7B4C13/5A7BC689" Ref="D?"  Part="1" 
+AR Path="/5A7B577E/5A7BC689" Ref="D?"  Part="1" 
+AR Path="/5A7B753D/5A7BC689" Ref="D?"  Part="1" 
+AR Path="/5A8D7860/5A7BC689" Ref="D301"  Part="1" 
+AR Path="/5A8D8BD2/5A7BC689" Ref="D401"  Part="1" 
+AR Path="/5A8D900F/5A7BC689" Ref="D501"  Part="1" 
+AR Path="/5A8D95F3/5A7BC689" Ref="D601"  Part="1" 
+AR Path="/5A8D9C64/5A7BC689" Ref="D701"  Part="1" 
+AR Path="/5A8DA46E/5A7BC689" Ref="D801"  Part="1" 
+AR Path="/5A8DB2AD/5A7BC689" Ref="D901"  Part="1" 
+AR Path="/5A8DBBEF/5A7BC689" Ref="D1001"  Part="1" 
+AR Path="/5A8DEA06/5A7BC689" Ref="D1101"  Part="1" 
+AR Path="/5A8DF701/5A7BC689" Ref="D1201"  Part="1" 
+F 0 "D1201" H 3650 3340 45  0000 C CNN
+F 1 "DIODE_RS07J-GS18" H 3720 3140 45  0001 L BNN
+F 2 "usevolt:DO219AB" H 3730 3350 20  0001 C CNN
+F 3 "http://www.vishay.com/docs/85742/rs07b.pdf" H 3720 3220 60  0001 C CNN
+F 4 "1864882" H 4320 3820 60  0001 C CNN "2nd Source Part Number"
+F 5 "Digi-Key" H 4020 3520 60  0001 C CNN "1st Source"
+F 6 "Farnell" H 4220 3720 60  0001 C CNN "2nd Source"
+F 7 "RS07J-GS18" H 3920 3420 60  0001 C CNN "Manufacturer Part Number"
+F 8 "RS07J-GS18-ND" H 4120 3620 60  0001 C CNN "1st Source Part Number"
+F 9 "Vishay Semiconductor Diodes Division" H 3820 3320 60  0001 C CNN "Manufacturer"
+	1    3700 3200
+	1    0    0    -1  
+$EndComp
+Connection ~ 3500 3350
+$Comp
+L power:+3V3 #PWR0302
+U 1 1 5A7BC750
+P 3900 3100
+AR Path="/5A8D7860/5A7BC750" Ref="#PWR0302"  Part="1" 
+AR Path="/5A8D8BD2/5A7BC750" Ref="#PWR0402"  Part="1" 
+AR Path="/5A8D900F/5A7BC750" Ref="#PWR0502"  Part="1" 
+AR Path="/5A8D95F3/5A7BC750" Ref="#PWR0602"  Part="1" 
+AR Path="/5A8D9C64/5A7BC750" Ref="#PWR0702"  Part="1" 
+AR Path="/5A8DA46E/5A7BC750" Ref="#PWR0802"  Part="1" 
+AR Path="/5A8DB2AD/5A7BC750" Ref="#PWR0902"  Part="1" 
+AR Path="/5A8DBBEF/5A7BC750" Ref="#PWR01002"  Part="1" 
+AR Path="/5A8DEA06/5A7BC750" Ref="#PWR01102"  Part="1" 
+AR Path="/5A8DF701/5A7BC750" Ref="#PWR01202"  Part="1" 
+F 0 "#PWR01202" H 3900 2950 50  0001 C CNN
+F 1 "+3V3" H 3915 3273 50  0000 C CNN
+F 2 "" H 3900 3100 50  0000 C CNN
+F 3 "" H 3900 3100 50  0000 C CNN
+	1    3900 3100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3900 3100 3900 3200
+Wire Wire Line
+	3900 3200 3800 3200
+Wire Wire Line
+	5250 3800 5250 3900
+Wire Wire Line
+	5250 3900 5250 4000
+Wire Wire Line
+	5250 4100 5450 4100
+Wire Wire Line
+	5250 4400 5700 4400
+Wire Wire Line
+	2950 4300 2950 4450
+Wire Wire Line
+	2950 4100 2950 4300
+Wire Wire Line
+	3500 3550 4150 3550
+Wire Wire Line
+	2650 3450 4300 3450
+Wire Wire Line
+	2650 4000 4300 4000
+Wire Wire Line
+	5700 4400 5800 4400
+Wire Wire Line
+	5450 4100 5800 4100
+Wire Wire Line
+	5550 5050 5700 5050
+Wire Wire Line
+	4150 3900 4150 4100
+Wire Wire Line
+	3500 3350 3500 3550
 $EndSCHEMATC

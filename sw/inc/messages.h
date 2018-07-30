@@ -18,18 +18,12 @@
 
 int obj_dict_len();
 
-void stat_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv);
-
 
 
 /// @brief: Lists all gsm commands
 typedef enum {
 	CMD_STAT = 0,
-	CMD_ENGINE,
-	CMD_PUMP,
-	CMD_CLEAR,
-	CMD_OILC,
-	CMD_AC,
+	CMD_SET,
 	CMD_COUNT
 } gsm_commands_e;
 

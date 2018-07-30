@@ -16,39 +16,47 @@
 #include <uv_pwm.h>
 
 
-// Analog inputs
-#define VDD_SENSE_AIN				ADC0_11
-#define GLOW_SENSE_AIN				ADC0_10
-#define STARTER_SENSE_AIN			ADC0_9
-#define AC_SENSE_AIN				ADC0_8
-#define ENGINE_START1_SENSE_AIN		ADC0_7
-#define ENGINE_START2_SENSE_AIN		ADC0_5
-#define PUMP_SENSE_AIN				ADC0_1
-#define ALT_IG_SENSE_AIN			ADC0_2
-#define MOTOR_TEMP_AIN				ADC1_11
-#define OIL_TEMP_AIN				ADC1_10
-#define FUEL_LEVEL_AIN				ADC1_8
-#define OIL_LEVEL_AIN				ADC1_9
-#define OILCOOLER_AIN				ADC1_0
 
-// Digital inputs
-#define ALT_L_I						P0_11
-#define ALT_P_RPM_I					P0_13
-#define MOTOR_WATER_TEMP_I			P1_3
-#define MOTOR_OIL_PRESS_I			P1_2
+#define BOOM_ROTATE_PWMA		PWM0_0
+#define BOOM_ROTATE_PWMB		PWM0_5
+#define BOOM_ROTATE_SENSE		ADC1_3
 
-// Digital outputs
-#define PUMP_PWM					PWM0_0
-#define ALT_IG_O					P0_5
-#define AC_O						P0_27
-#define ENGINE_START_1_O			P0_26
-#define ENGINE_START_2_O			P0_2
-#define GLOW_PLUGS_O				P0_29
-#define STARTER_O					P0_28
-#define OILCOOLER_O					P0_9
+#define BOOM_LIFT_PWMA			PWM0_1
+#define BOOM_LIFT_PWMB			PWM0_2
+#define BOOM_LIFT_SENSE			ADC1_1
+
+#define BOOM_FOLD_PWMA			PWM1_0
+#define BOOM_FOLD_PWMB			PWM2_3
+#define BOOM_FOLD_SENSE			ADC0_1
+
+#define IMPL1_PWMA				PWM1_3
+#define IMPL1_PWMB				PWM1_4
+#define IMPL1_SENSE				ADC0_4
+
+#define BOOM_TELESCOPE_PWMA		PWM0_3
+#define BOOM_TELESCOPE_PWMB		PWM0_4
+#define BOOM_TELESCOPE_SENSE	ADC0_8
+
+#define LEFT_FOOT_PWMA			PWM1_1
+#define LEFT_FOOT_PWMB			PWM2_4
+#define LEFT_FOOT_SENSE			ADC0_9
+
+#define RIGHT_FOOT_PWMA			PWM3_3
+#define RIGHT_FOOT_PWMB			PWM1_2
+#define RIGHT_FOOT_SENSE		ADC0_11
+
+#define ROTATOR_PWMA			PWM0_6
+#define ROTATOR_PWMB			PWM3_4
+#define ROTATOR_SENSE			ADC1_8
+
+#define IMPL2_PWMA				PWM2_0
+#define IMPL2_PWMB				PWM2_1
+#define IMPL2_SENSE				ADC1_9
 
 
-// RPM timer
-#define RPM_TIMER					TIMER1
+
+#define OUT11_SENSE		ADC1_6
+#define OUT11			P1_3
+
 
 #endif /* UW_MB_SRC_PIN_MAPPINGS_H_ */

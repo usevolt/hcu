@@ -22,30 +22,35 @@
 
 
 void boom_lift_conf_reset(boom_lift_conf_st *this) {
-
+	this->out_conf.acc = 40;
+	this->out_conf.dec = 40;
+	this->out_conf.invert = true;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 600;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 150;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 600;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma = 80;
 }
-
 
 
 
 void boom_lift_init(boom_lift_st *this, boom_lift_conf_st *conf_ptr) {
 	input_init(&this->input);
+
 	this->conf = conf_ptr;
 
-	uv_dual_solenoid_output_init(&this->out, BOOM_LIFT_PWMA,
+	uv_dual_solenoid_output_init(&this->out, &conf_ptr->out_conf, BOOM_LIFT_PWMA,
 			BOOM_LIFT_PWMB, BOOM_LIFT_SENSE, dev.dither_freq, dev.dither_ampl,
 			VND5050_CURRENT_AMPL_UA, SOLENOID_MAX_CURRENT, SOLENOID_FAULT_CURRENT,
 			HCU_EMCY_BOOM_LIFT_OVERLOAD_A, HCU_EMCY_BOOM_LIFT_OVERLOAD_B,
 			HCU_EMCY_BOOM_LIFT_FAULT_A, HCU_EMCY_BOOM_LIFT_FAULT_B);
-	uv_dual_solenoid_output_set_conf(&this->out, &this->conf->out_conf);
+
 }
 
 
 void boom_lift_step(boom_lift_st *this, uint16_t step_ms) {
 
-	input_step(&this->input, step_ms);
 
-	uv_dual_solenoid_output_set_conf(&this->out, &this->conf->out_conf);
+	input_step(&this->input, step_ms);
 
 	uv_dual_solenoid_output_set(&this->out, input_get_request(&this->input));
 

@@ -12,6 +12,7 @@
 #include "can_fsb.h"
 #include "can_csb.h"
 #include "can_hcu.h"
+#include "can_keypad.h"
 #include "pin_mappings.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -32,6 +33,13 @@ canopen_object_st obj_dict[] = {
 				.type = HCU_TOTAL_CURRENT_TYPE,
 				.permissions = HCU_TOTAL_CURRENT_PERMISSIONS,
 				.data_ptr = &this->total_current
+		},
+		{
+				.main_index = HCU_IMPLEMENT_INDEX,
+				.sub_index = HCU_IMPLEMENT_SUBINDEX,
+				.type = HCU_IMPLEMENT_TYPE,
+				.permissions = HCU_IMPLEMENT_PERMISSIONS,
+				.data_ptr = &this->implement
 		},
 		{
 				.main_index = HCU_BOOM_ROTATE_REQ_INDEX,
@@ -96,6 +104,140 @@ canopen_object_st obj_dict[] = {
 				.permissions = HCU_BOOM_FOLD_CURRENT_PERMISSIONS,
 				.data_ptr = &this->boom_fold.out.current_ma
 		},
+		{
+				.main_index = HCU_BOOM_TELESCOPE_REQ_INDEX,
+				.sub_index = HCU_BOOM_TELESCOPE_REQ_SUBINDEX,
+				.type = HCU_BOOM_TELESCOPE_REQ_TYPE,
+				.permissions = HCU_BOOM_TELESCOPE_REQ_PERMISSIONS,
+				.data_ptr = &this->boom_telescope.input.request
+		},
+		{
+				.main_index = HCU_BOOM_TELESCOPE_PARAM_INDEX,
+				.array_max_size = HCU_BOOM_TELESCOPE_PARAM_ARRAY_MAX_SIZE,
+				.type = HCU_BOOM_TELESCOPE_PARAM_TYPE,
+				.permissions = HCU_BOOM_TELESCOPE_PARAM_PERMISSIONS,
+				.data_ptr = &this->boom_telescope_conf
+		},
+		{
+				.main_index = HCU_BOOM_TELESCOPE_CURRENT_INDEX,
+				.sub_index = HCU_BOOM_TELESCOPE_CURRENT_SUBINDEX,
+				.type = HCU_BOOM_TELESCOPE_CURRENT_TYPE,
+				.permissions = HCU_BOOM_TELESCOPE_CURRENT_PERMISSIONS,
+				.data_ptr = &this->boom_telescope.out.current_ma
+		},
+		{
+				.main_index = HCU_LEFT_FOOT_REQ_INDEX,
+				.sub_index = HCU_LEFT_FOOT_REQ_SUBINDEX,
+				.type = HCU_LEFT_FOOT_REQ_TYPE,
+				.permissions = HCU_LEFT_FOOT_REQ_PERMISSIONS,
+				.data_ptr = &this->left_foot.input.request
+		},
+		{
+				.main_index = HCU_LEFT_FOOT_PARAM_INDEX,
+				.array_max_size = HCU_LEFT_FOOT_PARAM_ARRAY_MAX_SIZE,
+				.type = HCU_LEFT_FOOT_PARAM_TYPE,
+				.permissions = HCU_LEFT_FOOT_PARAM_PERMISSIONS,
+				.data_ptr = &this->left_foot_conf
+		},
+		{
+				.main_index = HCU_LEFT_FOOT_CURRENT_INDEX,
+				.sub_index = HCU_LEFT_FOOT_CURRENT_SUBINDEX,
+				.type = HCU_LEFT_FOOT_CURRENT_TYPE,
+				.permissions = HCU_LEFT_FOOT_CURRENT_PERMISSIONS,
+				.data_ptr = &this->left_foot.out.current_ma
+		},
+		{
+				.main_index = HCU_RIGHT_FOOT_REQ_INDEX,
+				.sub_index = HCU_RIGHT_FOOT_REQ_SUBINDEX,
+				.type = HCU_RIGHT_FOOT_REQ_TYPE,
+				.permissions = HCU_RIGHT_FOOT_REQ_PERMISSIONS,
+				.data_ptr = &this->right_foot.input.request
+		},
+		{
+				.main_index = HCU_RIGHT_FOOT_PARAM_INDEX,
+				.array_max_size = HCU_RIGHT_FOOT_PARAM_ARRAY_MAX_SIZE,
+				.type = HCU_RIGHT_FOOT_PARAM_TYPE,
+				.permissions = HCU_RIGHT_FOOT_PARAM_PERMISSIONS,
+				.data_ptr = &this->right_foot_conf
+		},
+		{
+				.main_index = HCU_RIGHT_FOOT_CURRENT_INDEX,
+				.sub_index = HCU_RIGHT_FOOT_CURRENT_SUBINDEX,
+				.type = HCU_RIGHT_FOOT_CURRENT_TYPE,
+				.permissions = HCU_RIGHT_FOOT_CURRENT_PERMISSIONS,
+				.data_ptr = &this->right_foot.out.current_ma
+		},
+		{
+				.main_index = HCU_ROTATOR_REQ_INDEX,
+				.sub_index = HCU_ROTATOR_REQ_SUBINDEX,
+				.type = HCU_ROTATOR_REQ_TYPE,
+				.permissions = HCU_ROTATOR_REQ_PERMISSIONS,
+				.data_ptr = &this->rotator.input.request
+		},
+		{
+				.main_index = HCU_ROTATOR_PARAM_INDEX,
+				.array_max_size = HCU_ROTATOR_PARAM_ARRAY_MAX_SIZE,
+				.type = HCU_ROTATOR_PARAM_TYPE,
+				.permissions = HCU_ROTATOR_PARAM_PERMISSIONS,
+				.data_ptr = &this->rotator_conf
+		},
+		{
+				.main_index = HCU_ROTATOR_CURRENT_INDEX,
+				.sub_index = HCU_ROTATOR_CURRENT_SUBINDEX,
+				.type = HCU_ROTATOR_CURRENT_TYPE,
+				.permissions = HCU_ROTATOR_CURRENT_PERMISSIONS,
+				.data_ptr = &this->rotator.out.current_ma
+		},
+		{
+				.main_index = HCU_IMPL1_REQ_INDEX,
+				.sub_index = HCU_IMPL1_REQ_SUBINDEX,
+				.type = HCU_IMPL1_REQ_TYPE,
+				.permissions = HCU_IMPL1_REQ_PERMISSIONS,
+				.data_ptr = &this->impl1.input.request
+		},
+		{
+				.main_index = HCU_IMPL1_PARAM_INDEX,
+				.array_max_size = HCU_IMPL1_PARAM_ARRAY_MAX_SIZE,
+				.type = HCU_IMPL1_PARAM_TYPE,
+				.permissions = HCU_IMPL1_PARAM_PERMISSIONS,
+				.data_ptr = &this->impl1_conf
+		},
+		{
+				.main_index = HCU_IMPL1_CURRENT_INDEX,
+				.sub_index = HCU_IMPL1_CURRENT_SUBINDEX,
+				.type = HCU_IMPL1_CURRENT_TYPE,
+				.permissions = HCU_IMPL1_CURRENT_PERMISSIONS,
+				.data_ptr = &this->impl1.out.current_ma
+		},
+		{
+				.main_index = HCU_IMPL2_REQ_INDEX,
+				.sub_index = HCU_IMPL2_REQ_SUBINDEX,
+				.type = HCU_IMPL2_REQ_TYPE,
+				.permissions = HCU_IMPL2_REQ_PERMISSIONS,
+				.data_ptr = &this->impl2.input.request
+		},
+		{
+				.main_index = HCU_IMPL2_PARAM_INDEX,
+				.array_max_size = HCU_IMPL2_PARAM_ARRAY_MAX_SIZE,
+				.type = HCU_IMPL2_PARAM_TYPE,
+				.permissions = HCU_IMPL2_PARAM_PERMISSIONS,
+				.data_ptr = &this->impl2_conf
+		},
+		{
+				.main_index = HCU_IMPL2_CURRENT_INDEX,
+				.sub_index = HCU_IMPL2_CURRENT_SUBINDEX,
+				.type = HCU_IMPL2_CURRENT_TYPE,
+				.permissions = HCU_IMPL2_CURRENT_PERMISSIONS,
+				.data_ptr = &this->impl2.out.current_ma
+		},
+
+		{
+				.main_index = HCU_PRESSURE_INDEX,
+				.sub_index = HCU_PRESSURE_SUBINDEX,
+				.type = HCU_PRESSURE_TYPE,
+				.permissions = HCU_PRESSURE_PERMISSIONS,
+				.data_ptr = &this->pressure.value
+		},
 
 
 		{
@@ -111,6 +253,27 @@ canopen_object_st obj_dict[] = {
 				.type = FSB_EMCY_TYPE,
 				.permissions = FSB_EMCY_PERMISSIONS,
 				.data_ptr = &this->fsb.emcy
+		},
+		{
+				.main_index = HCU_FSB_INDEX_OFFSET + FSB_DOORSW1_INDEX,
+				.sub_index = FSB_DOORSW1_SUBINDEX,
+				.type = FSB_DOORSW1_TYPE,
+				.permissions = FSB_DOORSW1_PERMISSIONS,
+				.data_ptr = &this->fsb.door_sw1
+		},
+		{
+				.main_index = HCU_FSB_INDEX_OFFSET + FSB_DOORSW2_INDEX,
+				.sub_index = FSB_DOORSW2_SUBINDEX,
+				.type = FSB_DOORSW2_TYPE,
+				.permissions = FSB_DOORSW2_PERMISSIONS,
+				.data_ptr = &this->fsb.door_sw2
+		},
+		{
+				.main_index = HCU_FSB_INDEX_OFFSET + FSB_SEATSW_INDEX,
+				.sub_index = FSB_SEATSW_SUBINDEX,
+				.type = FSB_SEATSW_TYPE,
+				.permissions = FSB_SEATSW_PERMISSIONS,
+				.data_ptr = &this->fsb.seat_sw
 		},
 };
 
@@ -134,7 +297,7 @@ const uv_command_st terminal_commands[] = {
 				.id = CMD_SET,
 				.str = "set",
 				.instructions = "Sets the configurations for output modules.\n"
-						"Usage: set <\"bl\"/\"bf\"/\"br\"/\"bt\"> "
+						"Usage: set <\"bl\"/\"bf\"/\"br\"/\"bt\"/\"lf\"/\"rf\"> "
 						"<\"maxa\"/\"maxb\"/\"mina\"/\"minb\"/\"acc\"/\"dec\"/\"invert\">"
 						"<value>",
 				.callback = &set_callb
@@ -165,6 +328,16 @@ void stat_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv
 	stat_output(&this->boom_rotate.out, "Boom Rotate");
 	stat_output(&this->boom_lift.out, "Boom Lift");
 	stat_output(&this->boom_fold.out, "Boom Fold");
+	stat_output(&this->boom_telescope.out, "Boom Telescope");
+	stat_output(&this->left_foot.out, "Left Foot");
+	stat_output(&this->right_foot.out, "Right Foot");
+	stat_output(&this->rotator.out, "Rotator");
+
+	printf("Keypads found: left: %u right: %u\n",
+			!uv_canopen_heartbeat_producer_is_expired(LKEYPAD_NODE_ID),
+			!uv_canopen_heartbeat_producer_is_expired(RKEYPAD_NODE_ID));
+
+	printf("emcy: %u, ignkey state: %u\n", this->fsb.emcy, this->fsb.ignkey_state);
 }
 
 void set_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv) {
@@ -175,14 +348,27 @@ void set_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv)
 		uv_dual_solenoid_output_conf_st *conf = NULL;
 		const char *str = argv[0].str;
 		if (strcmp(str, "bl") == 0) {
-			conf = &this->boom_lift.conf->out_conf;
+			conf = &this->boom_lift_conf.out_conf;
 		}
 		else if (strcmp(str, "bf") == 0) {
-			conf = &this->boom_fold.conf->out_conf;
+			conf = &this->boom_fold_conf.out_conf;
 		}
 		else if (strcmp(str, "br") == 0) {
-			conf = &this->boom_rotate.conf->out_conf;
+			conf = &this->boom_rotate_conf.out_conf;
 		}
+		else if (strcmp(str, "bt") == 0) {
+			conf = &this->boom_telescope_conf.out_conf;
+		}
+		else if (strcmp(str, "lf") == 0) {
+			conf = &this->left_foot_conf.out_conf;
+		}
+		else if (strcmp(str, "rf") == 0) {
+			conf = &this->right_foot_conf.out_conf;
+		}
+		else if (strcmp(str, "rot") == 0) {
+			conf = &this->rotator_conf.out_conf;
+		}
+
 		else {
 			printf("Unknown module '%s'\n", str);
 		}

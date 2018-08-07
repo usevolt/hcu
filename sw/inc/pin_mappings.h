@@ -55,8 +55,10 @@
 
 
 
-#define OUT11_SENSE		ADC1_6
-#define OUT11			P1_3
+#define OUT11_SENSE				ADC1_6
+#define OUT11					P1_3
 
+
+#define PRESS_SENSE				ADC1_4
 
 #endif /* UW_MB_SRC_PIN_MAPPINGS_H_ */

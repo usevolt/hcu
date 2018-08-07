@@ -21,33 +21,31 @@
 
 
 void boom_rotate_conf_reset(boom_rotate_conf_st *this) {
-	this->out_conf.acc = DUAL_SOLENOID_ACC_MAX;
-	this->out_conf.dec = DUAL_SOLENOID_DEC_MAX;
-	this->out_conf.invert = false;
-	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 4000;
-	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 250;
-	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 4000;
-	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma = 250;
+	this->out_conf.acc = 15;
+	this->out_conf.dec = 15;
+	this->out_conf.invert = true;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 800;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 150;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 800;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma = 150;
 }
 
 
 void boom_rotate_init(boom_rotate_st *this, boom_rotate_conf_st *conf_ptr) {
 	input_init(&this->input);
+
 	this->conf = conf_ptr;
 
-	uv_dual_solenoid_output_init(&this->out, BOOM_ROTATE_PWMA,
+	uv_dual_solenoid_output_init(&this->out, &conf_ptr->out_conf, BOOM_ROTATE_PWMA,
 			BOOM_ROTATE_PWMB, BOOM_ROTATE_SENSE, dev.dither_freq, dev.dither_ampl,
 			VND5050_CURRENT_AMPL_UA, SOLENOID_MAX_CURRENT, SOLENOID_FAULT_CURRENT,
 			HCU_EMCY_BOOM_ROTATE_OVERLOAD_A, HCU_EMCY_BOOM_ROTATE_OVERLOAD_B,
 			HCU_EMCY_BOOM_ROTATE_FAULT_A, HCU_EMCY_BOOM_ROTATE_FAULT_B);
-	uv_dual_solenoid_output_set_conf(&this->out, &this->conf->out_conf);
 }
 
 
 void boom_rotate_step(boom_rotate_st *this, uint16_t step_ms) {
 	input_step(&this->input, step_ms);
-
-	uv_dual_solenoid_output_set_conf(&this->out, &this->conf->out_conf);
 
 	uv_dual_solenoid_output_set(&this->out, input_get_request(&this->input));
 

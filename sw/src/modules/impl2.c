@@ -19,39 +19,43 @@
 
 
 
-#include "boom_fold.h"
+#include "impl2.h"
 #include "main.h"
 #include "pin_mappings.h"
 
 
-void boom_fold_conf_reset(boom_fold_conf_st *this) {
-	this->out_conf.acc = 40;
-	this->out_conf.dec = 40;
-	this->out_conf.invert = true;
-	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 600;
+void impl2_conf_reset(impl2_conf_st *this) {
+	this->out_conf.acc = 96;
+	this->out_conf.dec = 96;
+	this->out_conf.invert = false;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 1000;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 150;
-	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 600;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 1000;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma = 80;
 }
 
 
-void boom_fold_init(boom_fold_st *this, boom_fold_conf_st *conf_ptr) {
+void impl2_init(impl2_st *this, impl2_conf_st *conf_ptr) {
 	input_init(&this->input);
-
 	this->conf = conf_ptr;
 
-	uv_dual_solenoid_output_init(&this->out, &conf_ptr->out_conf, BOOM_FOLD_PWMA,
-			BOOM_FOLD_PWMB, BOOM_FOLD_SENSE, dev.dither_freq, dev.dither_ampl,
+	uv_dual_solenoid_output_init(&this->out, &conf_ptr->out_conf, IMPL2_PWMA,
+			IMPL2_PWMB, IMPL2_SENSE, dev.dither_freq, dev.dither_ampl,
 			VND5050_CURRENT_AMPL_UA, SOLENOID_MAX_CURRENT, SOLENOID_FAULT_CURRENT,
-			HCU_EMCY_BOOM_FOLD_OVERLOAD_A, HCU_EMCY_BOOM_FOLD_OVERLOAD_B,
-			HCU_EMCY_BOOM_FOLD_FAULT_A, HCU_EMCY_BOOM_FOLD_FAULT_B);
+			HCU_EMCY_IMPL2_OVERLOAD_A, HCU_EMCY_IMPL2_OVERLOAD_B,
+			HCU_EMCY_IMPL2_FAULT_A, HCU_EMCY_IMPL2_FAULT_B);
 }
 
 
-void boom_fold_step(boom_fold_st *this, uint16_t step_ms) {
+void impl2_step(impl2_st *this, uint16_t step_ms) {
 	input_step(&this->input, step_ms);
 
+
+	// todo: with UW50 and UW100, impl input requests should be remapped to keypad messages.
+
 	uv_dual_solenoid_output_set(&this->out, input_get_request(&this->input));
+
+
 
 }
 

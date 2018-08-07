@@ -19,39 +19,41 @@
 
 
 
-#include "boom_fold.h"
+#include "impl1.h"
 #include "main.h"
 #include "pin_mappings.h"
 
 
-void boom_fold_conf_reset(boom_fold_conf_st *this) {
-	this->out_conf.acc = 40;
-	this->out_conf.dec = 40;
-	this->out_conf.invert = true;
-	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 600;
+void impl1_conf_reset(impl1_conf_st *this) {
+	this->out_conf.acc = 96;
+	this->out_conf.dec = 96;
+	this->out_conf.invert = false;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 1000;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 150;
-	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 600;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 1000;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma = 80;
 }
 
 
-void boom_fold_init(boom_fold_st *this, boom_fold_conf_st *conf_ptr) {
+void impl1_init(impl1_st *this, impl1_conf_st *conf_ptr) {
 	input_init(&this->input);
-
 	this->conf = conf_ptr;
 
-	uv_dual_solenoid_output_init(&this->out, &conf_ptr->out_conf, BOOM_FOLD_PWMA,
-			BOOM_FOLD_PWMB, BOOM_FOLD_SENSE, dev.dither_freq, dev.dither_ampl,
+	uv_dual_solenoid_output_init(&this->out, &conf_ptr->out_conf, IMPL1_PWMA,
+			IMPL1_PWMB, IMPL1_SENSE, dev.dither_freq, dev.dither_ampl,
 			VND5050_CURRENT_AMPL_UA, SOLENOID_MAX_CURRENT, SOLENOID_FAULT_CURRENT,
-			HCU_EMCY_BOOM_FOLD_OVERLOAD_A, HCU_EMCY_BOOM_FOLD_OVERLOAD_B,
-			HCU_EMCY_BOOM_FOLD_FAULT_A, HCU_EMCY_BOOM_FOLD_FAULT_B);
+			HCU_EMCY_IMPL1_OVERLOAD_A, HCU_EMCY_IMPL1_OVERLOAD_B,
+			HCU_EMCY_IMPL1_FAULT_A, HCU_EMCY_IMPL1_FAULT_B);
 }
 
 
-void boom_fold_step(boom_fold_st *this, uint16_t step_ms) {
+void impl1_step(impl1_st *this, uint16_t step_ms) {
 	input_step(&this->input, step_ms);
 
+
 	uv_dual_solenoid_output_set(&this->out, input_get_request(&this->input));
+
+
 
 }
 

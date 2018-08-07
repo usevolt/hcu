@@ -24,6 +24,15 @@ static bool initialized = false;
 
 
 
+int16_t get_pressure(uv_adc_channels_e adc) {
+	int32_t ret = (int64_t) uv_adc_read(PRESS_SENSE) * 3300000 / (ADC_MAX_VALUE * 750);
+
+	int32_t rel = uv_reli(ret, 4000, 20000);
+	ret = uv_lerpi(rel, 0, PRESS_SENSOR_MAX_BAR);
+
+	return ret;
+}
+
 
 void init(dev_st* me) {
 	// load non-volatile data
@@ -32,18 +41,40 @@ void init(dev_st* me) {
 		this->dither_ampl = DITHER_AMPL_DEF;
 		this->dither_freq = DITHER_FREQ_DEF;
 
+		this->implement = HCU_IMPLEMENT_NONE;
+
 		boom_rotate_conf_reset(&this->boom_rotate_conf);
+		boom_lift_conf_reset(&this->boom_lift_conf);
+		boom_fold_conf_reset(&this->boom_fold_conf);
+		boom_telescope_conf_reset(&this->boom_telescope_conf);
+		left_foot_conf_reset(&this->left_foot_conf);
+		right_foot_conf_reset(&this->right_foot_conf);
+		rotator_conf_reset(&this->rotator_conf);
+		impl1_conf_reset(&this->impl1_conf);
+		impl2_conf_reset(&this->impl2_conf);
 
 		// initialize non-volatile memory to default settings
 		uv_memory_save();
 	}
-	// initialize outputs
 
 	this->total_current = 0;
+	uv_sensor_init(&this->pressure, PRESS_SENSE, PRESS_MOVING_AVG_COUNT, &get_pressure);
+	uv_sensor_set_fault(&this->pressure, PRESS_FAULT_MIN_VALUE_UA, PRESS_FAULT_MAX_VALUE_UA,
+			PRESS_FAULT_HYSTERESIS_UA, HCU_EMCY_PRESSURE_SENSOR_FAULT);
+
+	if (this->implement >= HCU_IMPLEMENT_COUNT) {
+		this->implement = HCU_IMPLEMENT_NONE;
+	}
 
 	boom_rotate_init(&this->boom_rotate, &this->boom_rotate_conf);
 	boom_lift_init(&this->boom_lift, &this->boom_lift_conf);
 	boom_fold_init(&this->boom_fold, &this->boom_fold_conf);
+	boom_telescope_init(&this->boom_telescope, &this->boom_telescope_conf);
+	left_foot_init(&this->left_foot, &this->left_foot_conf);
+	right_foot_init(&this->right_foot, &this->right_foot_conf);
+	rotator_init(&this->rotator, &this->rotator_conf);
+	impl1_init(&this->impl1, &this->impl1_conf);
+	impl2_init(&this->impl2, &this->impl2_conf);
 
 	uv_terminal_init(terminal_commands, commands_size());
 
@@ -68,6 +99,12 @@ void solenoid_step(void* me) {
 		boom_rotate_solenoid_step(&this->boom_rotate, step_ms);
 		boom_lift_solenoid_step(&this->boom_lift, step_ms);
 		boom_fold_solenoid_step(&this->boom_fold, step_ms);
+		boom_telescope_solenoid_step(&this->boom_telescope, step_ms);
+		left_foot_solenoid_step(&this->left_foot, step_ms);
+		right_foot_solenoid_step(&this->right_foot, step_ms);
+		rotator_solenoid_step(&this->rotator, step_ms);
+		impl1_solenoid_step(&this->impl1, step_ms);
+		impl2_solenoid_step(&this->impl2, step_ms);
 
 		uv_rtos_task_delay(step_ms);
 	}
@@ -86,38 +123,79 @@ void step(void* me) {
 		// terminal step function
 		uv_terminal_step();
 
+		// hydraulic pressure
+		uv_sensor_step(&this->pressure, step_ms);
 
 		this->total_current = abs(boom_rotate_get_current(&this->boom_rotate)) +
 				abs(boom_lift_get_current(&this->boom_lift)) +
-				abs(boom_fold_get_current(&this->boom_fold));
+				abs(boom_fold_get_current(&this->boom_fold)) +
+				abs(boom_telescope_get_current(&this->boom_telescope)) +
+				abs(left_foot_get_current(&this->left_foot)) +
+				abs(right_foot_get_current(&this->right_foot)) +
+				abs(rotator_get_current(&this->rotator)) +
+				abs(impl1_get_current(&this->impl1)) +
+				abs(impl2_get_current(&this->impl2));
 
 
 		boom_rotate_step(&this->boom_rotate, step_ms);
 		boom_lift_step(&this->boom_lift, step_ms);
 		boom_fold_step(&this->boom_fold, step_ms);
+		boom_telescope_step(&this->boom_telescope, step_ms);
+		left_foot_step(&this->left_foot, step_ms);
+		right_foot_step(&this->right_foot, step_ms);
+		rotator_step(&this->rotator, step_ms);
+		impl1_step(&this->impl1, step_ms);
+		impl2_step(&this->impl2, step_ms);
 
 
 		// if keypad heartbeat messages are not received, input from that keypad is set to zero
 		if (uv_canopen_heartbeat_producer_is_expired(LKEYPAD_NODE_ID)) {
 		}
+		else if (uv_canopen_heartbeat_producer_get_state(LKEYPAD_NODE_ID) != CANOPEN_OPERATIONAL) {
+			uv_canopen_command(LKEYPAD_NODE_ID, CANOPEN_NMT_START_NODE);
+		}
+		else {
+
+		}
+
+		// todo: jos nappis paasee expirettamaan, ei sita loydeta enaa koskaan
 		if (uv_canopen_heartbeat_producer_is_expired(RKEYPAD_NODE_ID)) {
+		}
+		else if (uv_canopen_heartbeat_producer_get_state(RKEYPAD_NODE_ID) != CANOPEN_OPERATIONAL) {
+			uv_canopen_command(RKEYPAD_NODE_ID, CANOPEN_NMT_START_NODE);
+		}
+		else {
+
 		}
 
 		// outputs are disables if FSB is not found, ignition key is not in ON state,
 		// or emergency switch is pressed
 		if (uv_canopen_heartbeat_producer_is_expired(FSB_NODE_ID) ||
 				(this->fsb.ignkey_state != FSB_IGNKEY_STATE_ON) ||
-				this->fsb.emcy) {
+				this->fsb.emcy ||
+				!this->fsb.seat_sw) {
 			// disable all outputs
 			boom_rotate_disable(&this->boom_rotate);
 			boom_lift_disable(&this->boom_lift);
 			boom_fold_disable(&this->boom_fold);
+			boom_telescope_disable(&this->boom_telescope);
+			left_foot_disable(&this->left_foot);
+			right_foot_disable(&this->right_foot);
+			rotator_disable(&this->rotator);
+			impl1_disable(&this->impl1);
+			impl2_disable(&this->impl2);
 		}
 		else {
 			// enable outputs
 			boom_rotate_enable(&this->boom_rotate);
-			boom_lift_disable(&this->boom_lift);
-			boom_fold_disable(&this->boom_fold);
+			boom_lift_enable(&this->boom_lift);
+			boom_fold_enable(&this->boom_fold);
+			boom_telescope_enable(&this->boom_telescope);
+			left_foot_enable(&this->left_foot);
+			right_foot_enable(&this->right_foot);
+			rotator_enable(&this->rotator);
+			impl1_enable(&this->impl1);
+			impl2_enable(&this->impl2);
 		}
 
 		uv_rtos_task_delay(step_ms);

@@ -25,12 +25,12 @@
 
 
 void impl1_conf_reset(impl1_conf_st *this) {
-	this->out_conf.acc = 96;
-	this->out_conf.dec = 96;
+	this->out_conf.acc = 100;
+	this->out_conf.dec = 100;
 	this->out_conf.invert = false;
-	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 1000;
-	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 150;
-	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 1000;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 1800;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 80;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 1800;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma = 80;
 }
 
@@ -50,10 +50,7 @@ void impl1_init(impl1_st *this, impl1_conf_st *conf_ptr) {
 void impl1_step(impl1_st *this, uint16_t step_ms) {
 	input_step(&this->input, step_ms);
 
-
 	uv_dual_solenoid_output_set(&this->out, input_get_request(&this->input));
-
-
 
 }
 

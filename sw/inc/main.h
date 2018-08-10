@@ -36,7 +36,7 @@
 #define SOLENOID_FAULT_CURRENT		5000
 
 #define PRESS_SENSOR_MAX_BAR		400
-#define PRESS_MOVING_AVG_COUNT		100
+#define PRESS_MOVING_AVG_COUNT		1
 #define PRESS_FAULT_HYSTERESIS_UA	3000
 #define PRESS_FAULT_MIN_VALUE_UA	4000
 #define PRESS_FAULT_MAX_VALUE_UA	20000
@@ -69,6 +69,9 @@ typedef struct _dev_st {
 		uint8_t door_sw2;
 		uint8_t seat_sw;
 	} fsb;
+	struct {
+		int8_t drive_req;
+	} ccu;
 
 	// non-volatile data start
 	uv_data_start_t data_start;

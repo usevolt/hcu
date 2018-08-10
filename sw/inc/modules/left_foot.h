@@ -26,6 +26,9 @@
 /// @brief: Boom fold configuration settings. Should be stored in non-volatile memory
 typedef struct {
 	uv_dual_solenoid_output_conf_st out_conf;
+	// if true, foot is assumed to go up when solenoid current is positive.
+	// if false, foot is assumed to do down when solenoid current is positive
+	uint16_t foot_up_dir;
 } left_foot_conf_st;
 
 /// @brief: Resets the non-volatile settings to defaults
@@ -39,6 +42,8 @@ typedef struct {
 	uv_dual_solenoid_output_st out;
 
 	left_foot_conf_st *conf;
+
+	hcu_foot_state_e state;
 
 } left_foot_st;
 

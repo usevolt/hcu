@@ -27,10 +27,10 @@
 void rotator_conf_reset(rotator_conf_st *this) {
 	this->out_conf.acc = 96;
 	this->out_conf.dec = 96;
-	this->out_conf.invert = false;
-	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 1000;
-	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 150;
-	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 1000;
+	this->out_conf.invert = true;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 300;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 80;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 300;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma = 80;
 }
 
@@ -51,9 +51,20 @@ void rotator_init(rotator_st *this, rotator_conf_st *conf_ptr) {
 void rotator_step(rotator_st *this, uint16_t step_ms) {
 	input_step(&this->input, step_ms);
 
+	int16_t req = 0;
 	// rotator is disabled for UW50
-	uv_dual_solenoid_output_set(&this->out,
-			(dev.implement == HCU_IMPLEMENT_UW50) ? 0 : input_get_request(&this->input));
+	if (dev.implement == HCU_IMPLEMENT_UW50) {
+		req = 0;
+	}
+	else {
+		if (dev.ccu.drive_req) {
+			req = 0;
+		}
+		else {
+			req = input_get_request(&this->input);
+		}
+	}
+	uv_dual_solenoid_output_set(&this->out, req);
 
 
 

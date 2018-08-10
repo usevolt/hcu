@@ -147,6 +147,13 @@ canopen_object_st obj_dict[] = {
 				.data_ptr = &this->left_foot.out.current_ma
 		},
 		{
+				.main_index = HCU_LEFT_FOOT_STATE_INDEX,
+				.sub_index = HCU_LEFT_FOOT_STATE_SUBINDEX,
+				.type = HCU_LEFT_FOOT_STATE_TYPE,
+				.permissions = HCU_LEFT_FOOT_STATE_PERMISSIONS,
+				.data_ptr = &this->left_foot.state
+		},
+		{
 				.main_index = HCU_RIGHT_FOOT_REQ_INDEX,
 				.sub_index = HCU_RIGHT_FOOT_REQ_SUBINDEX,
 				.type = HCU_RIGHT_FOOT_REQ_TYPE,
@@ -166,6 +173,13 @@ canopen_object_st obj_dict[] = {
 				.type = HCU_RIGHT_FOOT_CURRENT_TYPE,
 				.permissions = HCU_RIGHT_FOOT_CURRENT_PERMISSIONS,
 				.data_ptr = &this->right_foot.out.current_ma
+		},
+		{
+				.main_index = HCU_RIGHT_FOOT_STATE_INDEX,
+				.sub_index = HCU_RIGHT_FOOT_STATE_SUBINDEX,
+				.type = HCU_RIGHT_FOOT_STATE_TYPE,
+				.permissions = HCU_RIGHT_FOOT_STATE_PERMISSIONS,
+				.data_ptr = &this->right_foot.state
 		},
 		{
 				.main_index = HCU_ROTATOR_REQ_INDEX,
@@ -275,6 +289,13 @@ canopen_object_st obj_dict[] = {
 				.permissions = FSB_SEATSW_PERMISSIONS,
 				.data_ptr = &this->fsb.seat_sw
 		},
+		{
+				.main_index = HCU_CCU_INDEX_OFFSET + CCU_DRIVE_REQ_INDEX,
+				.sub_index = CCU_DRIVE_REQ_SUBINDEX,
+				.type = CCU_DRIVE_REQ_TYPE,
+				.permissions = CCU_DRIVE_REQ_PERMISSIONS,
+				.data_ptr = &this->ccu.drive_req
+		}
 };
 
 int obj_dict_len() {
@@ -297,7 +318,7 @@ const uv_command_st terminal_commands[] = {
 				.id = CMD_SET,
 				.str = "set",
 				.instructions = "Sets the configurations for output modules.\n"
-						"Usage: set <\"bl\"/\"bf\"/\"br\"/\"bt\"/\"lf\"/\"rf\"> "
+						"Usage: set <\"bl\"/\"bf\"/\"br\"/\"bt\"/\"lf\"/\"rf\"/\"impl1\"/\"impl2\"/\"rot\"> "
 						"<\"maxa\"/\"maxb\"/\"mina\"/\"minb\"/\"acc\"/\"dec\"/\"invert\">"
 						"<value>",
 				.callback = &set_callb
@@ -331,7 +352,11 @@ void stat_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv
 	stat_output(&this->boom_telescope.out, "Boom Telescope");
 	stat_output(&this->left_foot.out, "Left Foot");
 	stat_output(&this->right_foot.out, "Right Foot");
+	stat_output(&this->impl1.out, "Implement 1");
+	stat_output(&this->impl2.out, "Implement 2");
+	printf("Left foot state: %u, right foot state: %u\n", this->left_foot.state, this->right_foot.state);
 	stat_output(&this->rotator.out, "Rotator");
+	printf("Pressure: %i bar, adc: 0x%x\n", uv_sensor_get_value(&this->pressure), uv_adc_read(PRESS_SENSE));
 
 	printf("Keypads found: left: %u right: %u\n",
 			!uv_canopen_heartbeat_producer_is_expired(LKEYPAD_NODE_ID),
@@ -367,6 +392,12 @@ void set_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv)
 		}
 		else if (strcmp(str, "rot") == 0) {
 			conf = &this->rotator_conf.out_conf;
+		}
+		else if (strcmp(str, "impl1") == 0) {
+			conf = &this->impl1_conf.out_conf;
+		}
+		else if (strcmp(str, "impl2") == 0) {
+			conf = &this->impl2_conf.out_conf;
 		}
 
 		else {

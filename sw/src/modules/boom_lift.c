@@ -28,7 +28,7 @@ void boom_lift_conf_reset(boom_lift_conf_st *this) {
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 600;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 150;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 600;
-	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma = 80;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma = 90;
 }
 
 

@@ -25,9 +25,10 @@ static bool initialized = false;
 
 
 int16_t get_pressure(uv_adc_channels_e adc) {
-	int32_t ret = (int64_t) uv_adc_read(PRESS_SENSE) * 3300000 / (ADC_MAX_VALUE * 750);
+	int32_t ret = (int64_t) uv_adc_read(PRESS_SENSE) * 3300000 / (ADC_MAX_VALUE * 75);
 
 	int32_t rel = uv_reli(ret, 4000, 20000);
+
 	ret = uv_lerpi(rel, 0, PRESS_SENSOR_MAX_BAR);
 
 	return ret;
@@ -61,6 +62,14 @@ void init(dev_st* me) {
 	uv_sensor_init(&this->pressure, PRESS_SENSE, PRESS_MOVING_AVG_COUNT, &get_pressure);
 	uv_sensor_set_fault(&this->pressure, PRESS_FAULT_MIN_VALUE_UA, PRESS_FAULT_MAX_VALUE_UA,
 			PRESS_FAULT_HYSTERESIS_UA, HCU_EMCY_PRESSURE_SENSOR_FAULT);
+
+	this->fsb.door_sw1 = 0;
+	this->fsb.door_sw2 = 0;
+	this->fsb.seat_sw = 0;
+	this->fsb.emcy = 0;
+	this->fsb.ignkey_state = FSB_IGNKEY_STATE_OFF;
+
+	this->ccu.drive_req = 0;
 
 	if (this->implement >= HCU_IMPLEMENT_COUNT) {
 		this->implement = HCU_IMPLEMENT_NONE;
@@ -171,6 +180,8 @@ void step(void* me) {
 		// outputs are disables if FSB is not found, ignition key is not in ON state,
 		// or emergency switch is pressed
 		if (uv_canopen_heartbeat_producer_is_expired(FSB_NODE_ID) ||
+				uv_canopen_heartbeat_producer_is_expired(LKEYPAD_NODE_ID) ||
+				uv_canopen_heartbeat_producer_is_expired(RKEYPAD_NODE_ID) ||
 				(this->fsb.ignkey_state != FSB_IGNKEY_STATE_ON) ||
 				this->fsb.emcy ||
 				!this->fsb.seat_sw) {

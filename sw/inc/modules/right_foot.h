@@ -26,6 +26,7 @@
 /// @brief: Boom fold configuration settings. Should be stored in non-volatile memory
 typedef struct {
 	uv_dual_solenoid_output_conf_st out_conf;
+	uint16_t foot_up_dir;
 } right_foot_conf_st;
 
 /// @brief: Resets the non-volatile settings to defaults
@@ -39,6 +40,8 @@ typedef struct {
 	uv_dual_solenoid_output_st out;
 
 	right_foot_conf_st *conf;
+
+	hcu_foot_state_e state;
 
 } right_foot_st;
 

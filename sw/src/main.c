@@ -226,7 +226,7 @@ int main(void) {
 	uv_init(&dev);
 
 
-	uv_rtos_task_create(&step, "step", UV_RTOS_MIN_STACK_SIZE * 5,
+	uv_rtos_task_create(&step, "step", UV_RTOS_MIN_STACK_SIZE * 3,
 			&dev, UV_RTOS_IDLE_PRIORITY + 1, NULL);
 
 	uv_rtos_task_create(&solenoid_step, "solenoid", UV_RTOS_MIN_STACK_SIZE * 2,

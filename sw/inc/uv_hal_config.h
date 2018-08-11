@@ -141,9 +141,8 @@
 
 #define CONFIG_EEPROM								1
 #define CONFIG_EEPROM_RING_BUFFER					0
-#define CONFIG_RTC									1
 
-#define CONFIG_TIMER1								1
+#define CONFIG_RTC									0
 
 
 

@@ -72,7 +72,7 @@ void input_step(input_st *this, uint16_t step_ms) {
 
 
 
-int32_t input_get_request(input_st *this) {
+int32_t input_get_request(input_st *this, uv_dual_solenoid_output_conf_st *conf) {
 	int32_t ret = 0;
 	if (this->request != 0) {
 		int32_t rel = uv_reli(this->request, INT8_MIN, INT8_MAX);
@@ -86,6 +86,7 @@ int32_t input_get_request(input_st *this) {
 		else {
 
 		}
+		ret *= (conf->invert) ? -1 : 1;
 	}
 	return ret;
 }

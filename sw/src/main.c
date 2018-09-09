@@ -42,7 +42,7 @@ void init(dev_st* me) {
 		this->dither_ampl = DITHER_AMPL_DEF;
 		this->dither_freq = DITHER_FREQ_DEF;
 
-		this->implement = HCU_IMPLEMENT_NONE;
+		this->implement = HCU_IMPLEMENT_UW180S;
 
 		boom_rotate_conf_reset(&this->boom_rotate_conf);
 		boom_lift_conf_reset(&this->boom_lift_conf);
@@ -72,7 +72,7 @@ void init(dev_st* me) {
 	this->ccu.drive_req = 0;
 
 	if (this->implement >= HCU_IMPLEMENT_COUNT) {
-		this->implement = HCU_IMPLEMENT_NONE;
+		this->implement = HCU_IMPLEMENT_UW180S;
 	}
 
 	boom_rotate_init(&this->boom_rotate, &this->boom_rotate_conf);
@@ -84,6 +84,7 @@ void init(dev_st* me) {
 	rotator_init(&this->rotator, &this->rotator_conf);
 	impl1_init(&this->impl1, &this->impl1_conf);
 	impl2_init(&this->impl2, &this->impl2_conf);
+	d4wd_init(&this->d4wd);
 
 	uv_terminal_init(terminal_commands, commands_size());
 
@@ -114,6 +115,7 @@ void solenoid_step(void* me) {
 		rotator_solenoid_step(&this->rotator, step_ms);
 		impl1_solenoid_step(&this->impl1, step_ms);
 		impl2_solenoid_step(&this->impl2, step_ms);
+		d4wd_solenoid_step(&this->d4wd, step_ms);
 
 		uv_rtos_task_delay(step_ms);
 	}
@@ -126,6 +128,7 @@ void step(void* me) {
 
 	while (true) {
 		unsigned int step_ms = 20;
+
 		// update watchdog timer value to prevent a hard reset
 		// uw_wdt_update();
 
@@ -143,7 +146,8 @@ void step(void* me) {
 				abs(right_foot_get_current(&this->right_foot)) +
 				abs(rotator_get_current(&this->rotator)) +
 				abs(impl1_get_current(&this->impl1)) +
-				abs(impl2_get_current(&this->impl2));
+				abs(impl2_get_current(&this->impl2)) +
+				abs(d4wd_get_current(&this->d4wd));
 
 
 		boom_rotate_step(&this->boom_rotate, step_ms);
@@ -155,6 +159,7 @@ void step(void* me) {
 		rotator_step(&this->rotator, step_ms);
 		impl1_step(&this->impl1, step_ms);
 		impl2_step(&this->impl2, step_ms);
+		d4wd_step(&this->d4wd, step_ms);
 
 
 		// if keypad heartbeat messages are not received, input from that keypad is set to zero
@@ -195,6 +200,7 @@ void step(void* me) {
 			rotator_disable(&this->rotator);
 			impl1_disable(&this->impl1);
 			impl2_disable(&this->impl2);
+			d4wd_disable(&this->d4wd);
 		}
 		else {
 			// enable outputs
@@ -207,6 +213,7 @@ void step(void* me) {
 			rotator_enable(&this->rotator);
 			impl1_enable(&this->impl1);
 			impl2_enable(&this->impl2);
+			d4wd_enable(&this->d4wd);
 		}
 
 		uv_rtos_task_delay(step_ms);

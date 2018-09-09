@@ -49,14 +49,19 @@
 #define ROTATOR_PWMB			PWM3_4
 #define ROTATOR_SENSE			ADC1_8
 
-#define IMPL2_PWMA				PWM2_0
-#define IMPL2_PWMB				PWM2_1
-#define IMPL2_SENSE				ADC1_9
+#define IMPL2_1_PWMA			PWM2_0
+#define IMPL2_1_PWMB			PWM2_1
+#define IMPL2_1_SENSE			ADC1_9
+
+#define IMPL2_2_PWMA			PWM2_2
+#define IMPL2_2_PWMB			PWM1_5
+#define IMPL2_2_SENSE			ADC1_11
 
 
 
-#define OUT11_SENSE				ADC1_6
-#define OUT11					P1_3
+
+#define D4WD_SENSE				ADC1_6
+#define D4WD_OUT				P1_3
 
 
 #define PRESS_SENSE				ADC1_4

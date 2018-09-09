@@ -25,6 +25,7 @@ void boom_lift_conf_reset(boom_lift_conf_st *this) {
 	this->out_conf.acc = 40;
 	this->out_conf.dec = 40;
 	this->out_conf.invert = true;
+	this->out_conf.assembly_invert = false;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 600;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 150;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 600;
@@ -52,6 +53,6 @@ void boom_lift_step(boom_lift_st *this, uint16_t step_ms) {
 
 	input_step(&this->input, step_ms);
 
-	uv_dual_solenoid_output_set(&this->out, input_get_request(&this->input));
+	uv_dual_solenoid_output_set(&this->out, input_get_request(&this->input, &this->conf->out_conf));
 
 }

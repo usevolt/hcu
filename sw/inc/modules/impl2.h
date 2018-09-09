@@ -36,7 +36,8 @@ typedef struct {
 	// input module from the CAN-bus
 	input_st input;
 
-	uv_dual_solenoid_output_st out;
+	uv_dual_solenoid_output_st out1;
+	uv_dual_solenoid_output_st out2;
 
 	impl2_conf_st *conf;
 
@@ -52,13 +53,15 @@ void impl2_step(impl2_st *this, uint16_t step_ms);
 
 
 static inline int16_t impl2_get_current(impl2_st *this) {
-	return uv_dual_solenoid_output_get_current(&this->out);
+	return uv_dual_solenoid_output_get_current(&this->out1) +
+			uv_dual_solenoid_output_get_current(&this->out2);
 }
 
 /// @brief: Step function for the solenoid driver module. Should be called
 /// with a smaller step cycle from a higher priority thread than the main module.
 static inline void impl2_solenoid_step(impl2_st *this, uint16_t step_ms) {
-	uv_dual_solenoid_output_step(&this->out, step_ms);
+	uv_dual_solenoid_output_step(&this->out1, step_ms);
+	uv_dual_solenoid_output_step(&this->out2, step_ms);
 }
 
 
@@ -72,13 +75,15 @@ static inline void impl2_set_req(impl2_st *this, int8_t value) {
 
 /// @brief: Disables the boom fold module
 static inline void impl2_disable(impl2_st *this) {
-	uv_dual_solenoid_output_disable(&this->out);
+	uv_dual_solenoid_output_disable(&this->out1);
+	uv_dual_solenoid_output_disable(&this->out2);
 }
 
 
 /// @brief: Enables the boom fold module
 static inline void impl2_enable(impl2_st *this) {
-	uv_dual_solenoid_output_enable(&this->out);
+	uv_dual_solenoid_output_enable(&this->out1);
+	uv_dual_solenoid_output_enable(&this->out2);
 }
 
 

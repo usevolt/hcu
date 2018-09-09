@@ -22,12 +22,14 @@
 #include "rotator.h"
 #include "main.h"
 #include "pin_mappings.h"
+#include "can_keypad.h"
 
 
 void rotator_conf_reset(rotator_conf_st *this) {
 	this->out_conf.acc = 96;
 	this->out_conf.dec = 96;
 	this->out_conf.invert = true;
+	this->out_conf.assembly_invert = false;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 300;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 80;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 300;
@@ -51,17 +53,48 @@ void rotator_init(rotator_st *this, rotator_conf_st *conf_ptr) {
 void rotator_step(rotator_st *this, uint16_t step_ms) {
 	input_step(&this->input, step_ms);
 
-	int16_t req = 0;
-	// rotator is disabled for UW50
-	if (dev.implement == HCU_IMPLEMENT_UW50) {
-		req = 0;
+	canopen_pdo_mapping_parameter_st *map;
+
+	if (dev.implement == HCU_IMPLEMENT_UW180S ||
+			dev.implement == HCU_IMPLEMENT_UW100) {
+		// remap rotator to right joystick x
+		map = uv_canopen_rxpdo_get_mapping(CANOPEN_TXPDO1_ID + RKEYPAD_NODE_ID);
+		if (map != NULL) {
+			map->mappings[0].main_index = HCU_ROTATOR_REQ_INDEX;
+			map->mappings[0].sub_index = HCU_ROTATOR_REQ_SUBINDEX;
+		}
+		map = uv_canopen_rxpdo_get_mapping(CANOPEN_TXPDO1_ID + LKEYPAD_NODE_ID);
+		if (map != NULL) {
+			map->mappings[4].main_index = 0;
+			map->mappings[4].sub_index = 0;
+		}
+	}
+	else if (dev.implement == HCU_IMPLEMENT_UW50) {
+		// remap rotator to left joystick z
+		map = uv_canopen_rxpdo_get_mapping(CANOPEN_TXPDO1_ID + RKEYPAD_NODE_ID);
+		if (map != NULL) {
+			map->mappings[0].main_index = 0;
+			map->mappings[0].sub_index = 0;
+		}
+		map = uv_canopen_rxpdo_get_mapping(CANOPEN_TXPDO1_ID + LKEYPAD_NODE_ID);
+		if (map != NULL) {
+			map->mappings[4].main_index = HCU_ROTATOR_REQ_INDEX;
+			map->mappings[4].sub_index = HCU_ROTATOR_REQ_SUBINDEX;
+		}
 	}
 	else {
+
+	}
+
+	int16_t req = 0;
+	// rotator is disabled for UW180s and UW100 while driving
+	if (dev.implement == HCU_IMPLEMENT_UW180S ||
+			dev.implement == HCU_IMPLEMENT_UW100) {
 		if (dev.ccu.drive_req) {
 			req = 0;
 		}
 		else {
-			req = input_get_request(&this->input);
+			req = input_get_request(&this->input, &this->conf->out_conf);
 		}
 	}
 	uv_dual_solenoid_output_set(&this->out, req);

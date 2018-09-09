@@ -28,9 +28,10 @@ void impl2_conf_reset(impl2_conf_st *this) {
 	this->out_conf.acc = 100;
 	this->out_conf.dec = 100;
 	this->out_conf.invert = false;
-	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 2000;
+	this->out_conf.assembly_invert = false;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 1000;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 80;
-	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 2000;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 1000;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma = 80;
 }
 
@@ -39,11 +40,17 @@ void impl2_init(impl2_st *this, impl2_conf_st *conf_ptr) {
 	input_init(&this->input);
 	this->conf = conf_ptr;
 
-	uv_dual_solenoid_output_init(&this->out, &conf_ptr->out_conf, IMPL2_PWMA,
-			IMPL2_PWMB, IMPL2_SENSE, dev.dither_freq, dev.dither_ampl,
+	uv_dual_solenoid_output_init(&this->out1, &conf_ptr->out_conf, IMPL2_1_PWMA,
+			IMPL2_1_PWMB, IMPL2_1_SENSE, dev.dither_freq, dev.dither_ampl,
 			VND5050_CURRENT_AMPL_UA, SOLENOID_MAX_CURRENT, SOLENOID_FAULT_CURRENT,
-			HCU_EMCY_IMPL2_OVERLOAD_A, HCU_EMCY_IMPL2_OVERLOAD_B,
-			HCU_EMCY_IMPL2_FAULT_A, HCU_EMCY_IMPL2_FAULT_B);
+			HCU_EMCY_IMPL2_1_OVERLOAD_A, HCU_EMCY_IMPL2_1_OVERLOAD_B,
+			HCU_EMCY_IMPL2_1_FAULT_A, HCU_EMCY_IMPL2_1_FAULT_B);
+
+	uv_dual_solenoid_output_init(&this->out2, &conf_ptr->out_conf, IMPL2_2_PWMA,
+			IMPL2_2_PWMB, IMPL2_2_SENSE, dev.dither_freq, dev.dither_ampl,
+			VND5050_CURRENT_AMPL_UA, SOLENOID_MAX_CURRENT, SOLENOID_FAULT_CURRENT,
+			HCU_EMCY_IMPL2_2_OVERLOAD_A, HCU_EMCY_IMPL2_2_OVERLOAD_B,
+			HCU_EMCY_IMPL2_2_FAULT_A, HCU_EMCY_IMPL2_2_FAULT_B);
 }
 
 
@@ -53,7 +60,8 @@ void impl2_step(impl2_st *this, uint16_t step_ms) {
 
 	// todo: with UW50 and UW100, impl input requests should be remapped to keypad messages.
 
-	uv_dual_solenoid_output_set(&this->out, input_get_request(&this->input));
+	uv_dual_solenoid_output_set(&this->out1, input_get_request(&this->input, &this->conf->out_conf));
+	uv_dual_solenoid_output_set(&this->out2, input_get_request(&this->input, &this->conf->out_conf));
 
 
 

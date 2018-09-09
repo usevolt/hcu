@@ -238,11 +238,39 @@ canopen_object_st obj_dict[] = {
 				.data_ptr = &this->impl2_conf
 		},
 		{
-				.main_index = HCU_IMPL2_CURRENT_INDEX,
-				.sub_index = HCU_IMPL2_CURRENT_SUBINDEX,
-				.type = HCU_IMPL2_CURRENT_TYPE,
-				.permissions = HCU_IMPL2_CURRENT_PERMISSIONS,
-				.data_ptr = &this->impl2.out.current_ma
+				.main_index = HCU_IMPL2_CURRENT1_INDEX,
+				.sub_index = HCU_IMPL2_CURRENT1_SUBINDEX,
+				.type = HCU_IMPL2_CURRENT1_TYPE,
+				.permissions = HCU_IMPL2_CURRENT1_PERMISSIONS,
+				.data_ptr = &this->impl2.out1.current_ma
+		},
+		{
+				.main_index = HCU_IMPL2_CURRENT2_INDEX,
+				.sub_index = HCU_IMPL2_CURRENT2_SUBINDEX,
+				.type = HCU_IMPL2_CURRENT2_TYPE,
+				.permissions = HCU_IMPL2_CURRENT2_PERMISSIONS,
+				.data_ptr = &this->impl2.out2.current_ma
+		},
+		{
+				.main_index = HCU_D4WD_STATE_REQ_INDEX,
+				.sub_index = HCU_D4WD_STATE_REQ_SUBINDEX,
+				.type = HCU_D4WD_STATE_REQ_TYPE,
+				.permissions = HCU_D4WD_STATE_REQ_PERMISSIONS,
+				.data_ptr = &this->d4wd.req
+		},
+		{
+				.main_index = HCU_D4WD_STATE_INDEX,
+				.sub_index = HCU_D4WD_STATE_SUBINDEX,
+				.type = HCU_D4WD_STATE_TYPE,
+				.permissions = HCU_D4WD_STATE_PERMISSIONS,
+				.data_ptr = &this->d4wd.out.state
+		},
+		{
+				.main_index = HCU_D4WD_CURRENT_INDEX,
+				.sub_index = HCU_D4WD_CURRENT_SUBINDEX,
+				.type = HCU_D4WD_CURRENT_TYPE,
+				.permissions = HCU_D4WD_CURRENT_PERMISSIONS,
+				.data_ptr = &this->d4wd.out.current
 		},
 
 		{
@@ -353,14 +381,40 @@ void stat_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv
 	stat_output(&this->left_foot.out, "Left Foot");
 	stat_output(&this->right_foot.out, "Right Foot");
 	stat_output(&this->impl1.out, "Implement 1");
-	stat_output(&this->impl2.out, "Implement 2");
-	printf("Left foot state: %u, right foot state: %u\n", this->left_foot.state, this->right_foot.state);
+	stat_output(&this->impl2.out1, "Implement 2:1");
+	stat_output(&this->impl2.out1, "Implement 2:2");
+	printf("D4WD state: %u, current: %u mA\n",
+			uv_output_get_state(&this->d4wd.out),
+			d4wd_get_current(&this->d4wd));
+	printf("Left foot state: %u, right foot state: %u\n",
+			this->left_foot.state,
+			this->right_foot.state);
 	stat_output(&this->rotator.out, "Rotator");
-	printf("Pressure: %i bar, adc: 0x%x\n", uv_sensor_get_value(&this->pressure), uv_adc_read(PRESS_SENSE));
+	printf("Pressure: %i bar, adc: 0x%x\n",
+			uv_sensor_get_value(&this->pressure),
+			uv_adc_read(PRESS_SENSE));
+	char *str;
+	switch (this->implement) {
+	case HCU_IMPLEMENT_UW100:
+		str = "UW100";
+		break;
+	case HCU_IMPLEMENT_UW50:
+		str = "UW50";
+		break;
+	case HCU_IMPLEMENT_UW180S:
+		str = "UW180S";
+		break;
+	default:
+		str = "none";
+		break;
+	}
+	printf("Implement: %s\n", str);
 
 	printf("Keypads found: left: %u right: %u\n",
 			!uv_canopen_heartbeat_producer_is_expired(LKEYPAD_NODE_ID),
 			!uv_canopen_heartbeat_producer_is_expired(RKEYPAD_NODE_ID));
+	printf("FSB found: %u\n",
+			!uv_canopen_heartbeat_producer_is_expired(FSB_NODE_ID));
 
 	printf("emcy: %u, ignkey state: %u\n", this->fsb.emcy, this->fsb.ignkey_state);
 }
@@ -428,7 +482,10 @@ void set_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv)
 						conf->dec = value;
 					}
 					else if (strcmp(s, "invert") == 0) {
-						conf->invert = value;
+						conf->invert = (bool) value;
+					}
+					else if (strcmp(s, "assinv") == 0) {
+						conf->assembly_invert = (bool) value;
 					}
 					else {
 						printf("Unknown parameter '%s'\n", s);
@@ -446,7 +503,8 @@ void set_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv)
 					"   Min Speed B: %u\n"
 					"   Acceleration: %u\n"
 					"   Deceleration: %u\n"
-					"   Invert: %u\n",
+					"   Invert: %u\n"
+					"   Assembly invert: %u\n",
 					str,
 					conf->solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma,
 					conf->solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma,
@@ -454,7 +512,8 @@ void set_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv)
 					conf->solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma,
 					conf->acc,
 					conf->dec,
-					conf->invert);
+					conf->invert,
+					conf->assembly_invert);
 		}
 	}
 }

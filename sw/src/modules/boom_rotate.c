@@ -24,6 +24,7 @@ void boom_rotate_conf_reset(boom_rotate_conf_st *this) {
 	this->out_conf.acc = 15;
 	this->out_conf.dec = 30;
 	this->out_conf.invert = true;
+	this->out_conf.assembly_invert = false;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 1100;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 100;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 1100;
@@ -47,7 +48,7 @@ void boom_rotate_init(boom_rotate_st *this, boom_rotate_conf_st *conf_ptr) {
 void boom_rotate_step(boom_rotate_st *this, uint16_t step_ms) {
 	input_step(&this->input, step_ms);
 
-	uv_dual_solenoid_output_set(&this->out, input_get_request(&this->input));
+	uv_dual_solenoid_output_set(&this->out, input_get_request(&this->input, &this->conf->out_conf));
 
 
 }

@@ -27,11 +27,12 @@
 void boom_fold_conf_reset(boom_fold_conf_st *this) {
 	this->out_conf.acc = 40;
 	this->out_conf.dec = 40;
-	this->out_conf.invert = true;
+	this->out_conf.invert = false;
+	this->out_conf.assembly_invert = false;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 600;
-	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 150;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 80;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 600;
-	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma = 80;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma = 150;
 }
 
 
@@ -51,7 +52,7 @@ void boom_fold_init(boom_fold_st *this, boom_fold_conf_st *conf_ptr) {
 void boom_fold_step(boom_fold_st *this, uint16_t step_ms) {
 	input_step(&this->input, step_ms);
 
-	uv_dual_solenoid_output_set(&this->out, input_get_request(&this->input));
+	uv_dual_solenoid_output_set(&this->out, input_get_request(&this->input, &this->conf->out_conf));
 
 }
 

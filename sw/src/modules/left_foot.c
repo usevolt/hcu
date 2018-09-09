@@ -28,11 +28,11 @@ void left_foot_conf_reset(left_foot_conf_st *this) {
 	this->out_conf.acc = 40;
 	this->out_conf.dec = 60;
 	this->out_conf.invert = false;
+	this->out_conf.assembly_invert = true;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 1000;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 50;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 1000;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma = 80;
-	this->foot_up_dir = true;
 }
 
 
@@ -56,16 +56,16 @@ void left_foot_step(left_foot_st *this, uint16_t step_ms) {
 
 	// determine foot moving direction
 	if (uv_dual_solenoid_output_get_current(&this->out) > 0) {
-		this->state = this->conf->foot_up_dir ? HCU_FOOT_UP : HCU_FOOT_DOWN;
+		this->state = HCU_FOOT_UP;
 	}
 	else if (uv_dual_solenoid_output_get_current(&this->out) < 0) {
-		this->state = this->conf->foot_up_dir ? HCU_FOOT_DOWN : HCU_FOOT_UP;
+		this->state = HCU_FOOT_DOWN;
 	}
 	else {
 
 	}
 
-	uv_dual_solenoid_output_set(&this->out, input_get_request(&this->input));
+	uv_dual_solenoid_output_set(&this->out, input_get_request(&this->input, &this->conf->out_conf));
 
 
 }

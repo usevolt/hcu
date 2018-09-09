@@ -24,10 +24,11 @@
 #include "rotator.h"
 #include "impl1.h"
 #include "impl2.h"
+#include "d4wd.h"
 
 
 #define VND5050_CURRENT_AMPL_UA		1619
-#define VN5E01_CURRENT_AMPL_UA		13923
+#define VN5E01_CURRENT_AMPL_UA		5600
 
 #define DITHER_AMPL_DEF				0
 #define DITHER_FREQ_DEF				50
@@ -61,6 +62,7 @@ typedef struct _dev_st {
 	rotator_st rotator;
 	impl1_st impl1;
 	impl2_st impl2;
+	d4wd_st d4wd;
 
 	struct {
 		fsb_ignkey_states_e ignkey_state;

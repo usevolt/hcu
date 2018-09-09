@@ -24,6 +24,7 @@ void boom_telescope_conf_reset(boom_telescope_conf_st *this) {
 	this->out_conf.acc = DUAL_SOLENOID_ACC_MAX;
 	this->out_conf.dec = DUAL_SOLENOID_DEC_MAX;
 	this->out_conf.invert = true;
+	this->out_conf.assembly_invert = false;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 500;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 150;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 500;
@@ -46,7 +47,9 @@ void boom_telescope_init(boom_telescope_st *this, boom_telescope_conf_st *conf_p
 void boom_telescope_step(boom_telescope_st *this, uint16_t step_ms) {
 	input_step(&this->input, step_ms);
 
-	uv_dual_solenoid_output_set(&this->out, input_get_request(&this->input));
+	int16_t req = input_get_request(&this->input, &this->conf->out_conf);
+
+	uv_dual_solenoid_output_set(&this->out, req);
 
 }
 

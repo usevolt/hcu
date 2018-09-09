@@ -22,12 +22,14 @@
 #include "impl1.h"
 #include "main.h"
 #include "pin_mappings.h"
+#include "can_keypad.h"
 
 
 void impl1_conf_reset(impl1_conf_st *this) {
 	this->out_conf.acc = 100;
 	this->out_conf.dec = 100;
 	this->out_conf.invert = false;
+	this->out_conf.assembly_invert = false;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 1800;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 80;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 1800;
@@ -50,7 +52,30 @@ void impl1_init(impl1_st *this, impl1_conf_st *conf_ptr) {
 void impl1_step(impl1_st *this, uint16_t step_ms) {
 	input_step(&this->input, step_ms);
 
-	uv_dual_solenoid_output_set(&this->out, input_get_request(&this->input));
+	if (dev.implement == HCU_IMPLEMENT_UW50 ||
+			dev.implement == HCU_IMPLEMENT_UW100) {
+		// remap request to right joystick z
+		canopen_pdo_mapping_parameter_st *map =
+				uv_canopen_rxpdo_get_mapping(CANOPEN_TXPDO1_ID + RKEYPAD_NODE_ID);
+		if (map != NULL &&
+				map->mappings[4].main_index != HCU_IMPL1_REQ_INDEX) {
+			map->mappings[4].main_index = HCU_IMPL1_REQ_INDEX;
+			map->mappings[4].sub_index = HCU_IMPL1_REQ_SUBINDEX;
+		}
+	}
+	else {
+		// make sure request is not mapped to right joystick z
+		canopen_pdo_mapping_parameter_st *map =
+				uv_canopen_rxpdo_get_mapping(CANOPEN_TXPDO1_ID + RKEYPAD_NODE_ID);
+		if (map != NULL &&
+				map->mappings[4].main_index != 0) {
+			map->mappings[4].main_index = 0;
+			map->mappings[4].sub_index = 0;
+		}
+
+	}
+
+	uv_dual_solenoid_output_set(&this->out, input_get_request(&this->input, &this->conf->out_conf));
 
 }
 

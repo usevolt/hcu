@@ -68,6 +68,7 @@ static inline void boom_telescope_solenoid_step(boom_telescope_st *this, uint16_
 /// @brief: Disables the boom telescope module
 static inline void boom_telescope_disable(boom_telescope_st *this) {
 	uv_dual_solenoid_output_disable(&this->out);
+	this->input.request = 0;
 }
 
 

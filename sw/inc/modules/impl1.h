@@ -73,6 +73,7 @@ static inline void impl1_solenoid_step(impl1_st *this, uint16_t step_ms) {
 /// @brief: Disables the boom fold module
 static inline void impl1_disable(impl1_st *this) {
 	uv_dual_solenoid_output_disable(&this->out);
+	this->input.request = 0;
 }
 
 

@@ -68,6 +68,7 @@ static inline void boom_rotate_solenoid_step(boom_rotate_st *this, uint16_t step
 /// @brief: Disables the boom rotate module
 static inline void boom_rotate_disable(boom_rotate_st *this) {
 	uv_dual_solenoid_output_disable(&this->out);
+	this->input.request = 0;
 }
 
 

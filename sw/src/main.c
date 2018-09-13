@@ -172,7 +172,6 @@ void step(void* me) {
 
 		}
 
-		// todo: jos nappis paasee expirettamaan, ei sita loydeta enaa koskaan
 		if (uv_canopen_heartbeat_producer_is_expired(RKEYPAD_NODE_ID)) {
 		}
 		else if (uv_canopen_heartbeat_producer_get_state(RKEYPAD_NODE_ID) != CANOPEN_OPERATIONAL) {

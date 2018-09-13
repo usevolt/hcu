@@ -69,6 +69,7 @@ static inline void left_foot_solenoid_step(left_foot_st *this, uint16_t step_ms)
 /// @brief: Disables the boom fold module
 static inline void left_foot_disable(left_foot_st *this) {
 	uv_dual_solenoid_output_disable(&this->out);
+	this->input.request = 0;
 }
 
 

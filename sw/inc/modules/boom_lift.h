@@ -68,6 +68,7 @@ static inline void boom_lift_solenoid_step(boom_lift_st *this, uint16_t step_ms)
 /// @brief: Disables the boom lift module
 static inline void boom_lift_disable(boom_lift_st *this) {
 	uv_dual_solenoid_output_disable(&this->out);
+	this->input.request = 0;
 }
 
 

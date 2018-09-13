@@ -56,6 +56,7 @@ static inline void d4wd_solenoid_step(d4wd_st *this, uint16_t step_ms) {
 /// @brief: Disables the boom fold module
 static inline void d4wd_disable(d4wd_st *this) {
 	uv_output_disable(&this->out);
+	this->req = OUTPUT_STATE_OFF;
 }
 
 

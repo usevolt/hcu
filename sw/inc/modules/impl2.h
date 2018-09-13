@@ -77,6 +77,7 @@ static inline void impl2_set_req(impl2_st *this, int8_t value) {
 static inline void impl2_disable(impl2_st *this) {
 	uv_dual_solenoid_output_disable(&this->out1);
 	uv_dual_solenoid_output_disable(&this->out2);
+	this->input.request = 0;
 }
 
 

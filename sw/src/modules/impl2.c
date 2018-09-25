@@ -58,7 +58,27 @@ void impl2_step(impl2_st *this, uint16_t step_ms) {
 	input_step(&this->input, step_ms);
 
 
-	// todo: with UW50 and UW100, impl input requests should be remapped to keypad messages.
+	if (dev.implement == HCU_IMPLEMENT_UW100) {
+		// remap request to left joystick z
+		canopen_pdo_mapping_parameter_st *map =
+				uv_canopen_rxpdo_get_mapping(CANOPEN_TXPDO1_ID + LKEYPAD_NODE_ID);
+		if (map != NULL &&
+				map->mappings[4].main_index != HCU_IMPL2_REQ_INDEX) {
+			map->mappings[4].main_index = HCU_IMPL2_REQ_INDEX;
+			map->mappings[4].sub_index = HCU_IMPL2_REQ_SUBINDEX;
+		}
+	}
+	else {
+		// make sure request is not mapped to left joystick z
+		canopen_pdo_mapping_parameter_st *map =
+				uv_canopen_rxpdo_get_mapping(CANOPEN_TXPDO1_ID + LKEYPAD_NODE_ID);
+		if (map != NULL &&
+				map->mappings[4].main_index != 0) {
+			map->mappings[4].main_index = 0;
+			map->mappings[4].sub_index = 0;
+		}
+
+	}
 
 	uv_dual_solenoid_output_set(&this->out1, input_get_request(&this->input, &this->conf->out_conf));
 	uv_dual_solenoid_output_set(&this->out2, input_get_request(&this->input, &this->conf->out_conf));

@@ -4491,7 +4491,7 @@
     (arrow2a (pts (xy 209.747154 49.003578) (xy 209.160733 50.130082)))
     (arrow2b (pts (xy 209.747154 49.003578) (xy 210.333575 50.130082)))
   )
-  (gr_text "UW HCU 1.0\nUsevolt Oy" (at 205.4 124.6) (layer F.SilkS) (tstamp 5ABB55FF)
+  (gr_text "UW HCU 1.1\nUsevolt Oy" (at 205.4 124.6) (layer F.SilkS) (tstamp 5ABB55FF)
     (effects (font (size 1.5 1.5) (thickness 0.3)) (justify right))
   )
   (gr_line (start 131 49) (end 205 49) (layer Edge.Cuts) (width 0.1))

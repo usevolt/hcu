@@ -5,7 +5,7 @@
     (drawings 11)
     (tracks 1502)
     (zones 0)
-    (modules 121)
+    (modules 122)
     (nets 74)
   )
 
@@ -282,7 +282,7 @@
   )
 
   (module usevolt:uw_logo locked (layer F.Cu) (tedit 0) (tstamp 5ABB5606)
-    (at 198.8 114.8)
+    (at 199.4 123.5)
     (fp_text reference G*** (at 0 0) (layer F.SilkS) hide
       (effects (font (size 1.524 1.524) (thickness 0.3)))
     )
@@ -4463,6 +4463,17 @@
     )
   )
 
+  (module usevolt:MOUNTING_HOLE (layer F.Cu) (tedit 5B03CFD1) (tstamp 5BE30F24)
+    (at 203 112.3)
+    (fp_text reference REF** (at 0 -2.9972) (layer F.SilkS) hide
+      (effects (font (size 1 1) (thickness 0.15)))
+    )
+    (fp_text value MOUNTING_HOLE (at 0 -2.9972) (layer F.Fab) hide
+      (effects (font (size 1 1) (thickness 0.15)))
+    )
+    (pad "" np_thru_hole circle (at 0 0) (size 5.5 5.5) (drill 3.2) (layers *.Cu *.Mask))
+  )
+
   (gr_arc (start 131 137.000232) (end 131 139.000232) (angle 90) (layer Edge.Cuts) (width 0.1))
   (gr_arc (start 205 137) (end 207 137) (angle 90) (layer Edge.Cuts) (width 0.1))
   (gr_arc (start 205 51) (end 205 49) (angle 90) (layer Edge.Cuts) (width 0.1))
@@ -4491,7 +4502,7 @@
     (arrow2a (pts (xy 209.747154 49.003578) (xy 209.160733 50.130082)))
     (arrow2b (pts (xy 209.747154 49.003578) (xy 210.333575 50.130082)))
   )
-  (gr_text "UW HCU 1.1\nUsevolt Oy" (at 205.4 124.6) (layer F.SilkS) (tstamp 5ABB55FF)
+  (gr_text "UW HCU 1.2\nUsevolt Oy" (at 199 111.8) (layer F.SilkS) (tstamp 5ABB55FF)
     (effects (font (size 1.5 1.5) (thickness 0.3)) (justify right))
   )
   (gr_line (start 131 49) (end 205 49) (layer Edge.Cuts) (width 0.1))

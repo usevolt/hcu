@@ -63,10 +63,13 @@ void rotator_step(rotator_st *this, uint16_t step_ms) {
 			map->mappings[0].main_index = HCU_ROTATOR_REQ_INDEX;
 			map->mappings[0].sub_index = HCU_ROTATOR_REQ_SUBINDEX;
 		}
-		map = uv_canopen_rxpdo_get_mapping(CANOPEN_TXPDO1_ID + LKEYPAD_NODE_ID);
-		if (map != NULL) {
-			map->mappings[4].main_index = 0;
-			map->mappings[4].sub_index = 0;
+		// only clear mapping if implement is not UW100, because boom telescope might need this button
+		if (dev.implement != HCU_IMPLEMENT_UW100) {
+			map = uv_canopen_rxpdo_get_mapping(CANOPEN_TXPDO1_ID + LKEYPAD_NODE_ID);
+			if (map != NULL) {
+				map->mappings[4].main_index = 0;
+				map->mappings[4].sub_index = 0;
+			}
 		}
 	}
 	else if (dev.implement == HCU_IMPLEMENT_UW50) {
@@ -86,7 +89,7 @@ void rotator_step(rotator_st *this, uint16_t step_ms) {
 
 	}
 
-	int16_t req = 0;
+	int16_t req = input_get_request(&this->input, &this->conf->out_conf);
 	// rotator is disabled for UW180s and UW100 while driving
 	if (dev.implement == HCU_IMPLEMENT_UW180S ||
 			dev.implement == HCU_IMPLEMENT_UW100) {
@@ -97,6 +100,7 @@ void rotator_step(rotator_st *this, uint16_t step_ms) {
 			req = input_get_request(&this->input, &this->conf->out_conf);
 		}
 	}
+
 	uv_dual_solenoid_output_set(&this->out, req);
 
 

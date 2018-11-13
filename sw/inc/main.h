@@ -42,6 +42,9 @@
 #define PRESS_FAULT_MIN_VALUE_UA	4000
 #define PRESS_FAULT_MAX_VALUE_UA	20000
 
+#define ASSEMBLY_EEPROM_ADDR		0
+
+
 /// @brief: main data structure.
 /// This struct can be save to non-volatile flash memory with
 /// a terminal commmand 'save'.
@@ -49,6 +52,14 @@ typedef struct _dev_st {
 
 
 	uint16_t total_current;
+
+	// assembly settings are stored in eeprom
+	// Note: These variables are not initialized unless explicitly set.
+	// They default to value 0 but this depends on the hardware.
+	struct {
+		uint8_t boomtel_installed;
+	} assembly;
+	uint8_t assembly_write;
 
 	// hydraulic pressure measured in bars
 	uv_sensor_st pressure;

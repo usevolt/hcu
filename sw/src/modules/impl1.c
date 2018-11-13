@@ -72,7 +72,6 @@ void impl1_step(impl1_st *this, uint16_t step_ms) {
 			map->mappings[4].main_index = 0;
 			map->mappings[4].sub_index = 0;
 		}
-
 	}
 
 	uv_dual_solenoid_output_set(&this->out, input_get_request(&this->input, &this->conf->out_conf));

@@ -19,6 +19,7 @@
 #include <string.h>
 #include <uv_timer.h>
 #include <uv_utilities.h>
+#include <uv_eeprom.h>
 
 extern dev_st dev;
 #define this (&dev)
@@ -281,6 +282,21 @@ canopen_object_st obj_dict[] = {
 				.data_ptr = &this->pressure.value
 		},
 
+		{
+				.main_index = HCU_ASSEMBLY_INDEX,
+				.array_max_size = HCU_ASSEMBLY_ARRAY_SIZE,
+				.type = HCU_ASSEMBLY_TYPE,
+				.permissions = HCU_ASSEMBLY_PERMISSIONS,
+				.data_ptr = &this->assembly
+		},
+		{
+				.main_index = HCU_ASSEMBLY_WRITE_INDEX,
+				.sub_index = HCU_ASSEMBLY_WRITE_SUBINDEX,
+				.type = HCU_ASSEMBLY_WRITE_TYPE,
+				.permissions = HCU_ASSEMBLY_WRITE_PERMISSIONS,
+				.data_ptr = &dev.assembly_write
+		},
+
 
 		{
 				.main_index = HCU_FSB_INDEX_OFFSET + FSB_IGNKEY_INDEX,
@@ -332,6 +348,7 @@ int obj_dict_len() {
 
 void stat_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv);
 void set_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv);
+void ass_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv);
 
 
 const uv_command_st terminal_commands[] = {
@@ -350,6 +367,13 @@ const uv_command_st terminal_commands[] = {
 						"<\"maxa\"/\"maxb\"/\"mina\"/\"minb\"/\"acc\"/\"dec\"/\"invert\">"
 						"<value>",
 				.callback = &set_callb
+		},
+		{
+				.id = CMD_ASS,
+				.str = "ass",
+				.instructions = "Sets the assembly bits.\n"
+						"Usage: ass <\"boomtelescope\"> <value>",
+				.callback = &ass_callb
 		}
 };
 
@@ -518,5 +542,34 @@ void set_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv)
 	}
 }
 
+void ass_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv) {
+	if (args >= 2 &&
+			argv[0].type == ARG_STRING &&
+			argv[1].type == ARG_INTEGER) {
+		char *str = argv[0].str;
+		int value = argv[1].number;
+		bool match = true;
+		if (strcmp(str, "boomtelescope") == 0) {
+			this->assembly.boomtel_installed = value;
+		}
+		else {
+			match = false;
+		}
+		if (match) {
+			uv_eeprom_write(&this->assembly, sizeof(this->assembly), ASSEMBLY_EEPROM_ADDR);
+		}
+	}
+	else if (args) {
+		printf("First argument should be a string defining the parameter to set\n"
+				"and second parameter the value which will be set.\n");
+	}
+	else {
 
+	}
+
+	printf("Assembly variable:\n"
+			"   Boom Telescope: %u\n",
+			this->assembly.boomtel_installed);
+
+}
 

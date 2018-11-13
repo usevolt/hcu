@@ -17,6 +17,7 @@
 #include <uv_utilities.h>
 #include <uv_rtos.h>
 #include <string.h>
+#include <uv_eeprom.h>
 
 dev_st dev = {};
 static bool initialized = false;
@@ -63,6 +64,9 @@ void init(dev_st* me) {
 	uv_sensor_init(&this->pressure, PRESS_SENSE, PRESS_MOVING_AVG_COUNT, &get_pressure);
 	uv_sensor_set_fault(&this->pressure, PRESS_FAULT_MIN_VALUE_UA, PRESS_FAULT_MAX_VALUE_UA,
 			PRESS_FAULT_HYSTERESIS_UA, HCU_EMCY_PRESSURE_SENSOR_FAULT);
+
+	uv_eeprom_read(&this->assembly, sizeof(this->assembly), ASSEMBLY_EEPROM_ADDR);
+	this->assembly_write = 0;
 
 	this->fsb.door_sw1 = 0;
 	this->fsb.door_sw2 = 0;
@@ -140,6 +144,11 @@ void step(void* me) {
 
 		// terminal step function
 		uv_terminal_step();
+
+		if (this->assembly_write) {
+			uv_eeprom_write(&this->assembly, sizeof(this->assembly), ASSEMBLY_EEPROM_ADDR);
+			this->assembly_write = 0;
+		}
 
 		// hydraulic pressure
 		uv_sensor_step(&this->pressure, step_ms);

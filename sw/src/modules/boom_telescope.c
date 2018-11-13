@@ -45,11 +45,54 @@ void boom_telescope_init(boom_telescope_st *this, boom_telescope_conf_st *conf_p
 
 
 void boom_telescope_step(boom_telescope_st *this, uint16_t step_ms) {
-	input_step(&this->input, step_ms);
 
-	int16_t req = input_get_request(&this->input, &this->conf->out_conf);
+	if (dev.implement == HCU_IMPLEMENT_UW180S ||
+			dev.implement == HCU_IMPLEMENT_UW50) {
+		// remap request to right joystick button7
+		canopen_pdo_mapping_parameter_st *map =
+				uv_canopen_rxpdo_get_mapping(CANOPEN_TXPDO2_ID + RKEYPAD_NODE_ID);
+		if (map != NULL &&
+				map->mappings[6].main_index != HCU_BOOM_TELESCOPE_REQ_INDEX) {
+			map->mappings[6].main_index = HCU_BOOM_TELESCOPE_REQ_INDEX;
+			map->mappings[6].sub_index = HCU_BOOM_TELESCOPE_REQ_SUBINDEX;
+		}
+		// make sure request is not on left joystick thumb
+		if (dev.implement != HCU_IMPLEMENT_UW50) {
+			map = uv_canopen_rxpdo_get_mapping(CANOPEN_TXPDO1_ID + LKEYPAD_NODE_ID);
+			if (map != NULL &&
+					map->mappings[4].main_index != 0) {
+				map->mappings[4].main_index = 0;
+				map->mappings[4].sub_index = 0;
+			}
+		}
+	}
+	else {
+		// make sure request is not mapped to right joystick button7
+		canopen_pdo_mapping_parameter_st *map =
+				uv_canopen_rxpdo_get_mapping(CANOPEN_TXPDO2_ID + RKEYPAD_NODE_ID);
+		if (map != NULL &&
+				map->mappings[6].main_index != 0) {
+			map->mappings[6].main_index = 0;
+			map->mappings[6].sub_index = 0;
+		}
+		// map request to left joystick thumb
+		map = uv_canopen_rxpdo_get_mapping(CANOPEN_TXPDO1_ID + LKEYPAD_NODE_ID);
+		if (map != NULL &&
+				map->mappings[4].main_index != HCU_BOOM_TELESCOPE_REQ_INDEX) {
+			map->mappings[4].main_index = HCU_BOOM_TELESCOPE_REQ_INDEX;
+			map->mappings[4].sub_index = HCU_BOOM_TELESCOPE_REQ_SUBINDEX;
+		}
+	}
 
-	uv_dual_solenoid_output_set(&this->out, req);
+
+	if (dev.assembly.boomtel_installed) {
+
+		input_step(&this->input, step_ms);
+
+		int16_t req = input_get_request(&this->input, &this->conf->out_conf);
+
+		uv_dual_solenoid_output_set(&this->out, req);
+	}
 
 }
 

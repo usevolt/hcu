@@ -23,6 +23,7 @@
 #include "main.h"
 #include "pin_mappings.h"
 #include "can_keypad.h"
+#include <uv_rtos.h>
 
 
 void impl1_conf_reset(impl1_conf_st *this) {
@@ -52,6 +53,7 @@ void impl1_init(impl1_st *this, impl1_conf_st *conf_ptr) {
 void impl1_step(impl1_st *this, uint16_t step_ms) {
 	input_step(&this->input, step_ms);
 
+	uv_disable_int();
 	if (dev.implement == HCU_IMPLEMENT_UW50 ||
 			dev.implement == HCU_IMPLEMENT_UW100) {
 		// remap request to right joystick z
@@ -73,6 +75,7 @@ void impl1_step(impl1_st *this, uint16_t step_ms) {
 			map->mappings[4].sub_index = 0;
 		}
 	}
+	uv_enable_int();
 
 	uv_dual_solenoid_output_set(&this->out, input_get_request(&this->input, &this->conf->out_conf));
 

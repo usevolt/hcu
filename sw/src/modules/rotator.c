@@ -23,6 +23,7 @@
 #include "main.h"
 #include "pin_mappings.h"
 #include "can_keypad.h"
+#include <uv_rtos.h>
 
 
 void rotator_conf_reset(rotator_conf_st *this) {
@@ -55,6 +56,8 @@ void rotator_step(rotator_st *this, uint16_t step_ms) {
 
 	canopen_pdo_mapping_parameter_st *map;
 
+
+	uv_disable_int();
 	if (dev.implement == HCU_IMPLEMENT_UW180S ||
 			dev.implement == HCU_IMPLEMENT_UW100) {
 		// remap rotator to right joystick x
@@ -88,6 +91,7 @@ void rotator_step(rotator_st *this, uint16_t step_ms) {
 	else {
 
 	}
+	uv_enable_int();
 
 	int16_t req = input_get_request(&this->input, &this->conf->out_conf);
 	// rotator is disabled for UW180s and UW100 while driving

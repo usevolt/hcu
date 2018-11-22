@@ -18,6 +18,7 @@
 #include "boom_telescope.h"
 #include "main.h"
 #include "pin_mappings.h"
+#include <uv_rtos.h>
 
 
 void boom_telescope_conf_reset(boom_telescope_conf_st *this) {
@@ -46,6 +47,7 @@ void boom_telescope_init(boom_telescope_st *this, boom_telescope_conf_st *conf_p
 
 void boom_telescope_step(boom_telescope_st *this, uint16_t step_ms) {
 
+	uv_disable_int();
 	if (dev.implement == HCU_IMPLEMENT_UW180S ||
 			dev.implement == HCU_IMPLEMENT_UW50) {
 		// remap request to right joystick button7
@@ -83,6 +85,7 @@ void boom_telescope_step(boom_telescope_st *this, uint16_t step_ms) {
 			map->mappings[4].sub_index = HCU_BOOM_TELESCOPE_REQ_SUBINDEX;
 		}
 	}
+	uv_enable_int();
 
 
 	if (dev.assembly.boomtel_installed) {

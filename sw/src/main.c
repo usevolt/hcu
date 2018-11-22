@@ -91,6 +91,8 @@ void init(dev_st* me) {
 	impl2_init(&this->impl2, &this->impl2_conf);
 	d4wd_init(&this->d4wd);
 
+	uv_terminal_enable();
+
 	uv_terminal_init(terminal_commands, commands_size());
 
 	uv_canopen_set_state(CANOPEN_OPERATIONAL);
@@ -125,7 +127,7 @@ void solenoid_step(void* me) {
 		impl2_solenoid_step(&this->impl2, step_ms);
 		d4wd_solenoid_step(&this->d4wd, step_ms);
 
-		uv_mutex_unlock(mutex);
+		uv_mutex_unlock(&mutex);
 
 		uv_rtos_task_delay(step_ms);
 	}
@@ -240,6 +242,21 @@ void step(void* me) {
 
 
 
+void hardfault_callback(void) {
+	// we end up here if hardfault happened
+	printf("Hardfault! Resetting the device...\n");
+
+	boom_rotate_disable(&this->boom_rotate);
+	boom_lift_disable(&this->boom_lift);
+	boom_fold_disable(&this->boom_fold);
+	boom_telescope_disable(&this->boom_telescope);
+	left_foot_disable(&this->left_foot);
+	right_foot_disable(&this->right_foot);
+	rotator_disable(&this->rotator);
+	impl1_disable(&this->impl1);
+	impl2_disable(&this->impl2);
+	d4wd_disable(&this->d4wd);
+}
 
 
 

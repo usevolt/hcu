@@ -244,8 +244,6 @@ void step(void* me) {
 
 void hardfault_callback(void) {
 	// we end up here if hardfault happened
-	printf("Hardfault! Resetting the device...\n");
-
 	boom_rotate_disable(&this->boom_rotate);
 	boom_lift_disable(&this->boom_lift);
 	boom_fold_disable(&this->boom_fold);

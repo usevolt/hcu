@@ -268,11 +268,14 @@ int main(void) {
 	uv_init(&dev);
 
 
-	uv_rtos_task_create(&step, "step", UV_RTOS_MIN_STACK_SIZE * 3,
-			&dev, UV_RTOS_IDLE_PRIORITY + 1, NULL);
-
 	uv_rtos_task_create(&solenoid_step, "solenoid", UV_RTOS_MIN_STACK_SIZE * 2,
 			&dev, UV_RTOS_IDLE_PRIORITY + 2, NULL);
+
+	// testing with higher step function priority. As stopping the movements is
+	// dependent on this task, this is higher priority than solenoid_step
+	// to prevent running out of processing power
+	uv_rtos_task_create(&step, "step", UV_RTOS_MIN_STACK_SIZE * 3,
+			&dev, UV_RTOS_IDLE_PRIORITY + 3, NULL);
 
 
 	uv_rtos_start_scheduler();

@@ -79,7 +79,7 @@ Wire Wire Line
 Wire Wire Line
 	5150 3900 5150 3250
 Wire Wire Line
-	5150 3250 2500 3250
+	5150 3250 4350 3250
 Wire Wire Line
 	2500 3250 2500 2550
 Wire Wire Line
@@ -89,7 +89,7 @@ Wire Wire Line
 Wire Wire Line
 	2400 2700 2400 3350
 Wire Wire Line
-	2400 3350 5050 3350
+	2400 3350 4050 3350
 Wire Wire Line
 	5050 3350 5050 4000
 Wire Wire Line
@@ -1013,4 +1013,29 @@ F 7 "TE Connectivity" H 1550 3220 60  0001 C CNN "Manufacturer"
 	8    1350 3150
 	-1   0    0    1   
 $EndComp
+$Comp
+L yageo:120 R1
+U 1 1 5C4A75DD
+P 4150 3600
+F 0 "R1" H 4200 3784 45  0000 C CNN
+F 1 "120" H 4200 3700 45  0000 C CNN
+F 2 "yageo:0603" H 4180 3750 20  0001 C CNN
+F 3 "" H 4119 3639 60  0001 C CNN
+F 4 "" H 4519 4039 60  0001 C CNN "1st Source Part Number"
+F 5 "Digikey" H 4419 3939 60  0001 C CNN "1st Source"
+F 6 "RC0603FR-07120RL" H 4319 3839 60  0001 C CNN "Manufacturer Part Number"
+F 7 "YAGEO" H 4219 3739 60  0001 C CNN "Manufacturer"
+	1    4150 3600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4050 3600 4050 3350
+Connection ~ 4050 3350
+Wire Wire Line
+	4050 3350 5050 3350
+Wire Wire Line
+	4350 3600 4350 3250
+Connection ~ 4350 3250
+Wire Wire Line
+	4350 3250 2500 3250
 $EndSCHEMATC

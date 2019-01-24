@@ -788,6 +788,30 @@ X R2 2 -100 0 0 R 40 40 1 1 P
 ENDDRAW
 ENDDEF
 #
+# yageo_120
+#
+DEF yageo_120 R 0 40 N N 1 L N
+F0 "R" -31 39 45 H V L BNN
+F1 "yageo_120" -33 -84 45 H V L BNN
+F2 "yageo:0603" 30 150 20 H I C CNN
+F3 "" -31 39 60 H I C CNN
+F4 "Digikey" 269 339 60 H I C CNN "1st Source"
+F5 "RC0603FR-07120RL" 169 239 60 H I C CNN "Manufacturer Part Number"
+F6 "YAGEO" 69 139 60 H I C CNN "Manufacturer"
+DRAW
+P 2 1 0 0 -30 -30 130 -30 N
+P 2 1 0 0 -30 0 -100 0 N
+P 2 1 0 0 -30 0 -30 -30 N
+P 2 1 0 0 -30 30 -30 0 N
+P 2 1 0 0 130 -30 130 0 N
+P 2 1 0 0 130 0 130 30 N
+P 2 1 0 0 130 0 200 0 N
+P 2 1 0 0 130 30 -30 30 N
+X R1 1 200 0 0 L 40 40 1 1 P
+X R2 2 -100 0 0 R 40 40 1 1 P
+ENDDRAW
+ENDDEF
+#
 # yageo_1K
 #
 DEF yageo_1K R 0 40 N N 1 L N

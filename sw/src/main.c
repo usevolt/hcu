@@ -18,6 +18,7 @@
 #include <uv_rtos.h>
 #include <string.h>
 #include <uv_eeprom.h>
+#include <uv_wdt.h>
 
 dev_st dev = {};
 static bool initialized = false;
@@ -39,7 +40,7 @@ int16_t get_pressure(uv_adc_channels_e adc) {
 
 void init(dev_st* me) {
 	// load non-volatile data
-	if (uv_memory_load()) {
+	if (uv_memory_load(MEMORY_ALL_PARAMS)) {
 
 		this->dither_ampl = DITHER_AMPL_DEF;
 		this->dither_freq = DITHER_FREQ_DEF;
@@ -116,6 +117,16 @@ void solenoid_step(void* me) {
 
 		uv_mutex_lock(&mutex);
 
+
+		uv_can_msg_st m;
+		m.type = CAN_STD;
+		m.id = 0x7;
+		m.data_length = 2;
+		m.data_16bit[0] = 1;
+		uv_can_send(CAN0, &m);
+		_uv_can_hal_step(step_ms);
+
+
 		boom_rotate_solenoid_step(&this->boom_rotate, step_ms);
 		boom_lift_solenoid_step(&this->boom_lift, step_ms);
 		boom_fold_solenoid_step(&this->boom_fold, step_ms);
@@ -142,7 +153,7 @@ void step(void* me) {
 		unsigned int step_ms = 20;
 
 		// update watchdog timer value to prevent a hard reset
-		// uw_wdt_update();
+		 uv_wdt_update();
 
 		// terminal step function
 		uv_terminal_step();
@@ -262,11 +273,7 @@ void hardfault_callback(void) {
 
 int main(void) {
 
-	// init the watchdog timer
-//	uw_wdt_init(5);
-
 	uv_init(&dev);
-
 
 	uv_rtos_task_create(&solenoid_step, "solenoid", UV_RTOS_MIN_STACK_SIZE * 2,
 			&dev, UV_RTOS_IDLE_PRIORITY + 2, NULL);

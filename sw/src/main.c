@@ -40,7 +40,7 @@ int16_t get_pressure(uv_adc_channels_e adc) {
 
 void init(dev_st* me) {
 	// load non-volatile data
-	if (uv_memory_load(MEMORY_ALL_PARAMS)) {
+	if (uv_memory_load(MEMORY_APP_PARAMS)) {
 
 		this->dither_ampl = DITHER_AMPL_DEF;
 		this->dither_freq = DITHER_FREQ_DEF;
@@ -116,15 +116,6 @@ void solenoid_step(void* me) {
 		uint32_t step_ms = 2;
 
 		uv_mutex_lock(&mutex);
-
-
-		uv_can_msg_st m;
-		m.type = CAN_STD;
-		m.id = 0x7;
-		m.data_length = 2;
-		m.data_16bit[0] = 1;
-		uv_can_send(CAN0, &m);
-		_uv_can_hal_step(step_ms);
 
 
 		boom_rotate_solenoid_step(&this->boom_rotate, step_ms);

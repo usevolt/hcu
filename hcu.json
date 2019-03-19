@@ -1,0 +1,20 @@
+{
+	"DEV": "HCU",
+	
+	"NODEID": 0x07,
+
+	"EMCY": [
+	],
+	
+	"DEFINES": [
+	],
+	
+	
+	"OBJ_DICT": [
+	],
+	"RXPDO": [
+	],
+	"TXPDO": [
+	]
+	
+}

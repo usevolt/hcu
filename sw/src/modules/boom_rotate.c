@@ -48,7 +48,15 @@ void boom_rotate_init(boom_rotate_st *this, boom_rotate_conf_st *conf_ptr) {
 void boom_rotate_step(boom_rotate_st *this, uint16_t step_ms) {
 	input_step(&this->input, step_ms);
 
-	uv_dual_solenoid_output_set(&this->out, input_get_request(&this->input, &this->conf->out_conf));
+	int16_t req = input_get_request(&this->input, &this->conf->out_conf);
+	// if back steering is enabled, boom rotate is zero while driving
+	if (dev.assembly.backsteer_intalled &&
+			dev.ccu.drive_req) {
+		req = 0;
+	}
+	else {
+		uv_dual_solenoid_output_set(&this->out, req);
+	}
 
 
 }

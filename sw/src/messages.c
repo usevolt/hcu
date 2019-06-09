@@ -550,7 +550,10 @@ void ass_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv)
 		int value = argv[1].number;
 		bool match = true;
 		if (strcmp(str, "boomtelescope") == 0) {
-			this->assembly.boomtel_installed = value;
+			this->assembly.boomtel_installed = !!value;
+		}
+		else if (strcmp(str, "backsteer") == 0) {
+			this->assembly.backsteer_intalled = !!value;
 		}
 		else {
 			match = false;
@@ -568,8 +571,10 @@ void ass_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv)
 	}
 
 	printf("Assembly variable:\n"
-			"   Boom Telescope: %u\n",
-			this->assembly.boomtel_installed);
+			"   Boom Telescope: %u\n"
+			"   Back steer: %u\n",
+			this->assembly.boomtel_installed,
+			this->assembly.backsteer_intalled);
 
 }
 

@@ -58,6 +58,7 @@ typedef struct _dev_st {
 	// They default to value 0 but this depends on the hardware.
 	struct {
 		uint8_t boomtel_installed;
+		uint8_t backsteer_intalled;
 	} assembly;
 	uint8_t assembly_write;
 

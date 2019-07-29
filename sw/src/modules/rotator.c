@@ -59,15 +59,18 @@ void rotator_step(rotator_st *this, uint16_t step_ms) {
 
 	uv_disable_int();
 	if (dev.implement == HCU_IMPLEMENT_UW180S ||
-			dev.implement == HCU_IMPLEMENT_UW100) {
+			dev.implement == HCU_IMPLEMENT_UW100 ||
+			dev.implement == HCU_IMPLEMENT_HYDOUTPUT) {
 		// remap rotator to right joystick x
 		map = uv_canopen_rxpdo_get_mapping(CANOPEN_TXPDO1_ID + RKEYPAD_NODE_ID);
 		if (map != NULL) {
 			map->mappings[0].main_index = HCU_ROTATOR_REQ_INDEX;
 			map->mappings[0].sub_index = HCU_ROTATOR_REQ_SUBINDEX;
 		}
-		// only clear mapping if implement is not UW100, because boom telescope might need this button
-		if (dev.implement != HCU_IMPLEMENT_UW100) {
+		// only clear mapping if implement is not UW100 or hydout,
+		// since because boom telescope might need this button
+		if (dev.implement != HCU_IMPLEMENT_UW100 &&
+				dev.implement != HCU_IMPLEMENT_HYDOUTPUT) {
 			map = uv_canopen_rxpdo_get_mapping(CANOPEN_TXPDO1_ID + LKEYPAD_NODE_ID);
 			if (map != NULL) {
 				map->mappings[4].main_index = 0;
@@ -94,9 +97,8 @@ void rotator_step(rotator_st *this, uint16_t step_ms) {
 	uv_enable_int();
 
 	int16_t req = input_get_request(&this->input, &this->conf->out_conf);
-	// rotator is disabled for UW180s and UW100 while driving
-	if (dev.implement == HCU_IMPLEMENT_UW180S ||
-			dev.implement == HCU_IMPLEMENT_UW100) {
+	// rotator is disabled for all others than UW50 while driving
+	if (dev.implement != HCU_IMPLEMENT_UW50) {
 		if (dev.ccu.drive_req) {
 			req = 0;
 		}

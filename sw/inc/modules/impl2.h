@@ -36,8 +36,12 @@ typedef struct {
 	// input module from the CAN-bus
 	input_st input;
 
+	int16_t toggle_state;
+	uv_delay_st toggle_delay;
+
 	uv_dual_solenoid_output_st out1;
 	uv_dual_solenoid_output_st out2;
+
 
 	impl2_conf_st *conf;
 
@@ -74,11 +78,7 @@ static inline void impl2_set_req(impl2_st *this, int8_t value) {
 
 
 /// @brief: Disables the boom fold module
-static inline void impl2_disable(impl2_st *this) {
-	uv_dual_solenoid_output_disable(&this->out1);
-	uv_dual_solenoid_output_disable(&this->out2);
-	this->input.request = 0;
-}
+void impl2_disable(impl2_st *this);
 
 
 /// @brief: Enables the boom fold module

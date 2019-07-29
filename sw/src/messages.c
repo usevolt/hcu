@@ -428,6 +428,9 @@ void stat_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv
 	case HCU_IMPLEMENT_UW180S:
 		str = "UW180S";
 		break;
+	case HCU_IMPLEMENT_HYDOUTPUT:
+		str = "Hydroutput";
+		break;
 	default:
 		str = "none";
 		break;

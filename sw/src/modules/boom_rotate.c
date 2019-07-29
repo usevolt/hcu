@@ -54,9 +54,8 @@ void boom_rotate_step(boom_rotate_st *this, uint16_t step_ms) {
 			dev.ccu.drive_req) {
 		req = 0;
 	}
-	else {
-		uv_dual_solenoid_output_set(&this->out, req);
-	}
+
+	uv_dual_solenoid_output_set(&this->out, req);
 
 
 }

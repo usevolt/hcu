@@ -115,9 +115,6 @@ void solenoid_step(void* me) {
 	while (true) {
 		uint32_t step_ms = 2;
 
-		uv_mutex_lock(&mutex);
-
-
 		boom_rotate_solenoid_step(&this->boom_rotate, step_ms);
 		boom_lift_solenoid_step(&this->boom_lift, step_ms);
 		boom_fold_solenoid_step(&this->boom_fold, step_ms);
@@ -128,8 +125,6 @@ void solenoid_step(void* me) {
 		impl1_solenoid_step(&this->impl1, step_ms);
 		impl2_solenoid_step(&this->impl2, step_ms);
 		d4wd_solenoid_step(&this->d4wd, step_ms);
-
-		uv_mutex_unlock(&mutex);
 
 		uv_rtos_task_delay(step_ms);
 	}
@@ -169,8 +164,6 @@ void step(void* me) {
 				abs(d4wd_get_current(&this->d4wd));
 
 
-		uv_mutex_lock(&mutex);
-
 		boom_rotate_step(&this->boom_rotate, step_ms);
 		boom_lift_step(&this->boom_lift, step_ms);
 		boom_fold_step(&this->boom_fold, step_ms);
@@ -181,8 +174,6 @@ void step(void* me) {
 		impl1_step(&this->impl1, step_ms);
 		impl2_step(&this->impl2, step_ms);
 		d4wd_step(&this->d4wd, step_ms);
-
-		uv_mutex_unlock(&mutex);
 
 
 		// if keypad heartbeat messages are not received, input from that keypad is set to zero

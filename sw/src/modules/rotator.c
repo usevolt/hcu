@@ -68,9 +68,10 @@ void rotator_step(rotator_st *this, uint16_t step_ms) {
 			map->mappings[0].sub_index = HCU_ROTATOR_REQ_SUBINDEX;
 		}
 		// only clear mapping if implement is not UW100 or hydout,
-		// since because boom telescope might need this button
+		// since boom telescope might need this button
 		if (dev.implement != HCU_IMPLEMENT_UW100 &&
-				dev.implement != HCU_IMPLEMENT_HYDOUTPUT) {
+				dev.implement != HCU_IMPLEMENT_HYDOUTPUT &&
+				dev.implement != HCU_IMPLEMENT_UW180S) {
 			map = uv_canopen_rxpdo_get_mapping(CANOPEN_TXPDO1_ID + LKEYPAD_NODE_ID);
 			if (map != NULL) {
 				map->mappings[4].main_index = 0;

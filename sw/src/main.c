@@ -74,7 +74,7 @@ int16_t get_pressure(uv_adc_channels_e chn) {
 
 void init(dev_st* me) {
 	// load non-volatile data
-	if (uv_memory_load(MEMORY_APP_PARAMS)) {
+	if (uv_memory_load(MEMORY_ALL_PARAMS)) {
 
 		this->dither_ampl = DITHER_AMPL_DEF;
 		this->dither_freq = DITHER_FREQ_DEF;

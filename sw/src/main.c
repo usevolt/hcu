@@ -27,12 +27,46 @@ static bool initialized = false;
 
 uv_mutex_st mutex;
 
-int16_t get_pressure(uv_adc_channels_e adc) {
-	int32_t ret = (int64_t) uv_adc_read(PRESS_SENSE) * 3300000 / (ADC_MAX_VALUE * 75);
+static int compare(const void *val1, const void *val2) {
+	int v1 = *((int*) val1);
+	int v2 = *((int*) val2);
+	int ret = 0;
+	if (v1 > v2) {
+		ret = 1;
+	}
+	else if (v2 > v1) {
+		ret = -1;
+	}
+	else {
+
+	}
+	return ret;
+}
+
+int16_t get_pressure(uv_adc_channels_e chn) {
+	// we take multiple adc readings and choose the median from them
+	uint8_t count = 3;
+	int32_t adc[count];
+	int32_t ret = 0;
+	for (uint8_t i = 0; i < count; i++) {
+		adc[i] = uv_adc_read(PRESS_SENSE);
+	}
+	qsort(adc, count, sizeof(adc[0]), &compare);
+	ret = (int64_t) adc[count/2] * 3300000 / (ADC_MAX_VALUE * 75);
 
 	int32_t rel = uv_reli(ret, 4000, 20000);
 
 	ret = uv_lerpi(rel, 0, PRESS_SENSOR_MAX_BAR);
+
+	if (ret < 0) {
+		ret = 0;
+	}
+	else if (ret > PRESS_SENSOR_MAX_BAR) {
+		ret = PRESS_SENSOR_MAX_BAR;
+	}
+	else {
+
+	}
 
 	return ret;
 }
@@ -162,7 +196,6 @@ void step(void* me) {
 				abs(impl1_get_current(&this->impl1)) +
 				abs(impl2_get_current(&this->impl2)) +
 				abs(d4wd_get_current(&this->d4wd));
-
 
 		boom_rotate_step(&this->boom_rotate, step_ms);
 		boom_lift_step(&this->boom_lift, step_ms);

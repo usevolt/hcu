@@ -56,7 +56,5 @@ void boom_rotate_step(boom_rotate_st *this, uint16_t step_ms) {
 	}
 
 	uv_dual_solenoid_output_set(&this->out, req);
-
-
 }
 

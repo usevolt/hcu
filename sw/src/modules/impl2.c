@@ -80,7 +80,8 @@ void impl2_step(impl2_st *this, uint16_t step_ms) {
 			map->mappings[1].sub_index = 0;
 		}
 	}
-	else if (dev.implement == HCU_IMPLEMENT_HYDOUTPUT) {
+	else if (dev.implement == HCU_IMPLEMENT_HYDOUTPUT ||
+			dev.implement == HCU_IMPLEMENT_UW100) {
 		// make sure that UW100 is mapped to right joystick z,
 		// since it might be used with hydout
 		canopen_pdo_mapping_parameter_st *map =
@@ -99,7 +100,7 @@ void impl2_step(impl2_st *this, uint16_t step_ms) {
 			map->mappings[1].sub_index = HCU_IMPL2_REQ_SUBINDEX;
 		}
 	}
-	else if (dev.implement != HCU_IMPLEMENT_UW100) {
+	else {
 		// make sure request is not mapped to right joystick z. It will stay mapped in RXPDO.
 		canopen_pdo_mapping_parameter_st *map =
 				uv_canopen_rxpdo_get_mapping(CANOPEN_TXPDO1_ID + RKEYPAD_NODE_ID);
@@ -114,9 +115,6 @@ void impl2_step(impl2_st *this, uint16_t step_ms) {
 			map->mappings[1].main_index = 0;
 			map->mappings[1].sub_index = 0;
 		}
-	}
-	else {
-
 	}
 	uv_enable_int();
 

@@ -34,6 +34,16 @@ int16_t get_pressure(uv_adc_channels_e adc) {
 
 	ret = uv_lerpi(rel, 0, PRESS_SENSOR_MAX_BAR);
 
+	if (ret < 0) {
+		ret = 0;
+	}
+	else if (ret > PRESS_SENSOR_MAX_BAR) {
+		ret = PRESS_SENSOR_MAX_BAR;
+	}
+	else {
+
+	}
+
 	return ret;
 }
 

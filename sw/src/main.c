@@ -126,8 +126,6 @@ void init(dev_st* me) {
 	impl2_init(&this->impl2, &this->impl2_conf);
 	d4wd_init(&this->d4wd);
 
-	uv_terminal_enable();
-
 	uv_terminal_init(terminal_commands, commands_size());
 
 	uv_canopen_set_state(CANOPEN_OPERATIONAL);

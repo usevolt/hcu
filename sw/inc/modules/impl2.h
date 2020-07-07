@@ -42,6 +42,9 @@ typedef struct {
 	uv_dual_solenoid_output_st out1;
 	uv_dual_solenoid_output_st out2;
 
+	// request from CCU, from INT8_MIN + 1 ... INT8_MAX
+	int8_t canreq;
+
 
 	impl2_conf_st *conf;
 

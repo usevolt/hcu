@@ -44,6 +44,7 @@ void impl2_init(impl2_st *this, impl2_conf_st *conf_ptr) {
 	input_init(&this->input);
 	this->conf = conf_ptr;
 	this->toggle_state = false;
+	this->canreq = 0;
 	uv_delay_init(&this->toggle_delay, TOGGLE_DELAY_MS);
 
 	uv_dual_solenoid_output_init(&this->out1, &conf_ptr->out_conf, IMPL2_1_PWMA,
@@ -141,6 +142,11 @@ void impl2_step(impl2_st *this, uint16_t step_ms) {
 			this->toggle_state = 0;
 		}
 		req = this->toggle_state;
+	}
+
+	// if manual request is zero, take the request from the CAN-bus
+	if (req == 0) {
+		req = (int32_t) this->canreq * 1000 / INT8_MAX;
 	}
 
 	uv_dual_solenoid_output_set(&this->out1, req);

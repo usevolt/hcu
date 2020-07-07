@@ -253,6 +253,13 @@ canopen_object_st obj_dict[] = {
 				.data_ptr = &this->impl2.out2.current_ma
 		},
 		{
+				.main_index = HCU_IMPL2_CANREQ_INDEX,
+				.sub_index = HCU_IMPL2_CANREQ_SUBINDEX,
+				.type = HCU_IMPL2_CANREQ_TYPE,
+				.permissions = HCU_IMPL2_CANREQ_PERMISSIONS,
+				.data_ptr = &this->impl2.canreq
+		},
+		{
 				.main_index = HCU_D4WD_STATE_REQ_INDEX,
 				.sub_index = HCU_D4WD_STATE_REQ_SUBINDEX,
 				.type = HCU_D4WD_STATE_REQ_TYPE,
@@ -405,6 +412,7 @@ void stat_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv
 	stat_output(&this->left_foot.out, "Left Foot");
 	stat_output(&this->right_foot.out, "Right Foot");
 	stat_output(&this->impl1.out, "Implement 1");
+	printf("Impl2 can req: %i\n", this->impl2.canreq);
 	stat_output(&this->impl2.out1, "Implement 2:1");
 	stat_output(&this->impl2.out1, "Implement 2:2");
 	printf("D4WD state: %u, current: %u mA\n",

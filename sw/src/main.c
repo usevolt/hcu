@@ -246,7 +246,16 @@ void step(void* me) {
 			rotator_disable(&this->rotator);
 			impl1_disable(&this->impl1);
 			impl2_disable(&this->impl2);
-			d4wd_disable(&this->d4wd);
+			if (uv_canopen_heartbeat_producer_is_expired(FSB_NODE_ID) ||
+							uv_canopen_heartbeat_producer_is_expired(LKEYPAD_NODE_ID) ||
+							uv_canopen_heartbeat_producer_is_expired(RKEYPAD_NODE_ID) ||
+							(this->fsb.ignkey_state != FSB_IGNKEY_STATE_ON) ||
+							this->fsb.emcy) {
+				d4wd_disable(&this->d4wd);
+			}
+			else {
+				d4wd_enable(&this->d4wd);
+			}
 		}
 		else {
 			// enable outputs

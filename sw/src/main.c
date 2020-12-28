@@ -96,6 +96,9 @@ void init(dev_st* me) {
 	}
 
 	this->total_current = 0;
+	this->work_active = 0;
+	uv_delay_init(&this->work_delay, WORK_DELAY_MS);
+
 	uv_sensor_init(&this->pressure, PRESS_SENSE, PRESS_MOVING_AVG_COUNT, &get_pressure);
 	uv_sensor_set_fault(&this->pressure, PRESS_FAULT_MIN_VALUE_UA, PRESS_FAULT_MAX_VALUE_UA,
 			PRESS_FAULT_HYSTERESIS_UA, HCU_EMCY_PRESSURE_SENSOR_FAULT);
@@ -205,6 +208,28 @@ void step(void* me) {
 		impl1_step(&this->impl1, step_ms);
 		impl2_step(&this->impl2, step_ms);
 		d4wd_step(&this->d4wd, step_ms);
+
+
+		uv_delay(&this->work_delay, step_ms);
+		if (boom_rotate_get_active(&this->boom_rotate) |
+				boom_lift_get_active(&this->boom_lift) |
+				boom_fold_get_active(&this->boom_fold) |
+				boom_telescope_get_active(&this->boom_telescope) |
+				left_foot_get_active(&this->left_foot) |
+				right_foot_get_active(&this->right_foot) |
+				impl1_get_active(&this->impl1) |
+				impl2_get_active(&this->impl2)) {
+			this->work_active = true;
+			uv_delay_init(&this->work_delay, WORK_DELAY_MS);
+		}
+		else if (uv_delay_has_ended(&this->work_delay)) {
+			this->work_active = false;
+			uv_delay_init(&this->work_delay, WORK_DELAY_MS);
+		}
+		else {
+
+		}
+
 
 
 		// if keypad heartbeat messages are not received, input from that keypad is set to zero

@@ -64,6 +64,11 @@ static inline void boom_lift_solenoid_step(boom_lift_st *this, uint16_t step_ms)
 
 
 
+static inline uint8_t boom_lift_get_active(boom_lift_st *this) {
+	return !!uv_dual_solenoid_output_get_target(&this->out);
+}
+
+
 
 /// @brief: Disables the boom lift module
 static inline void boom_lift_disable(boom_lift_st *this) {

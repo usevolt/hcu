@@ -43,6 +43,13 @@ canopen_object_st obj_dict[] = {
 				.data_ptr = &this->implement
 		},
 		{
+				.main_index = HCU_WORK_ACTIVE_INDEX,
+				.sub_index = HCU_WORK_ACTIVE_SUBINDEX,
+				.type = HCU_WORK_ACTIVE_TYPE,
+				.permissions = HCU_WORK_ACTIVE_PERMISSIONS,
+				.data_ptr = &this->work_active
+		},
+		{
 				.main_index = HCU_BOOM_ROTATE_REQ_INDEX,
 				.sub_index = HCU_BOOM_ROTATE_REQ_SUBINDEX,
 				.type = HCU_BOOM_ROTATE_REQ_TYPE,

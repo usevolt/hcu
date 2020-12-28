@@ -80,6 +80,13 @@ static inline void impl2_set_req(impl2_st *this, int8_t value) {
 
 
 
+static inline uint8_t impl2_get_active(impl2_st *this) {
+	return !!uv_dual_solenoid_output_get_target(&this->out1) |
+			!!uv_dual_solenoid_output_get_target(&this->out2);
+}
+
+
+
 /// @brief: Disables the boom fold module
 void impl2_disable(impl2_st *this);
 

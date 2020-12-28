@@ -65,6 +65,11 @@ static inline void right_foot_solenoid_step(right_foot_st *this, uint16_t step_m
 
 
 
+static inline uint8_t right_foot_get_active(right_foot_st* this) {
+	return !!uv_dual_solenoid_output_get_target(&this->out);
+}
+
+
 
 /// @brief: Disables the boom fold module
 static inline void right_foot_disable(right_foot_st *this) {

@@ -56,6 +56,10 @@ static inline int16_t boom_rotate_get_current(boom_rotate_st *this) {
 	return uv_dual_solenoid_output_get_current(&this->out);
 }
 
+static inline uint8_t boom_rotate_get_active(boom_rotate_st *this) {
+	return !!uv_dual_solenoid_output_get_target(&this->out);
+}
+
 /// @brief: Step function for the solenoid driver module. Should be called
 /// with a smaller step cycle from a higher priority thread than the main module.
 static inline void boom_rotate_solenoid_step(boom_rotate_st *this, uint16_t step_ms) {

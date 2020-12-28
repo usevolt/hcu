@@ -44,6 +44,8 @@
 
 #define ASSEMBLY_EEPROM_ADDR		0
 
+#define WORK_DELAY_MS				5000
+
 
 /// @brief: main data structure.
 /// This struct can be save to non-volatile flash memory with
@@ -52,6 +54,8 @@ typedef struct _dev_st {
 
 
 	uint16_t total_current;
+	uint8_t work_active;
+	uv_delay_st work_delay;
 
 	// assembly settings are stored in eeprom
 	// Note: These variables are not initialized unless explicitly set.
@@ -94,6 +98,7 @@ typedef struct _dev_st {
 	int16_t dither_ampl;
 
 	hcu_impls_e implement;
+
 
 	boom_rotate_conf_st boom_rotate_conf;
 	boom_lift_conf_st boom_lift_conf;

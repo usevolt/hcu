@@ -63,6 +63,11 @@ static inline void boom_fold_solenoid_step(boom_fold_st *this, uint16_t step_ms)
 
 
 
+static inline uint8_t boom_fold_get_active(boom_fold_st *this) {
+	return !!uv_dual_solenoid_output_get_target(&this->out);
+}
+
+
 
 /// @brief: Disables the boom fold module
 static inline void boom_fold_disable(boom_fold_st *this) {

@@ -52,6 +52,11 @@ void boom_telescope_init(boom_telescope_st *this, boom_telescope_conf_st *conf_p
 void boom_telescope_step(boom_telescope_st *this, uint16_t step_ms);
 
 
+static inline uint8_t boom_telescope_get_active(boom_telescope_st *this) {
+	return !!uv_dual_solenoid_output_get_target(&this->out);
+}
+
+
 static inline int16_t boom_telescope_get_current(boom_telescope_st *this) {
 	return uv_dual_solenoid_output_get_current(&this->out);
 }

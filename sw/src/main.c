@@ -218,7 +218,8 @@ void step(void* me) {
 				left_foot_get_active(&this->left_foot) |
 				right_foot_get_active(&this->right_foot) |
 				impl1_get_active(&this->impl1) |
-				impl2_get_active(&this->impl2)) {
+				impl2_get_active(&this->impl2) |
+				rotator_get_active(&this->rotator)) {
 			this->work_active = true;
 			uv_delay_init(&this->work_delay, WORK_DELAY_MS);
 		}
